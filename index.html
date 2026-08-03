@@ -106,9 +106,15 @@
   /* ---- abstract ---- */
   .abstract .lead{max-width:58ch}
 
-  /* ---- capabilities ---- */
-  .cap-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:8px}
-  .cap{background:var(--paper); padding:34px 30px 40px}
+  /* ---- capabilities: cards as nodes in a wired fabric ---- */
+  .capabilities{position:relative}
+  #capnet{position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:0}
+  .cap-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:8px; position:relative; z-index:1}
+  .cap{background:var(--paper); border:1px solid var(--rule); padding:32px 28px 36px; position:relative;
+       transition:border-color .3s ease, transform .3s ease, box-shadow .3s ease}
+  .cap:hover{border-color:color-mix(in srgb, var(--accent) 55%, var(--rule)); transform:translateY(-3px)}
+  .cap::after{content:""; position:absolute; top:-4.5px; left:-4.5px; width:8px; height:8px; border-radius:50%;
+              background:var(--paper); border:1.5px solid var(--accent); opacity:.75}
   .cap .ch{font-family:var(--mono); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:20px}
   .cap h3{margin-bottom:12px}
   .cap p{font-size:16px; line-height:1.55; color:var(--muted)}
@@ -300,6 +306,7 @@
   <section class="capabilities" id="capabilities">
     <div class="wrap">
       <p class="eyebrow">Capabilities</p>
+      <canvas id="capnet" aria-hidden="true"></canvas>
       <div class="cap-grid">
         <div class="cap"><p class="ch">The premise</p><h3>We make the data you already collect more useful</h3><p>No new hardware and no new workflow. The signals are already recorded; we turn them into earlier warning, which means fewer patients escalated to a higher level of care, fewer deaths, and lower cost per case.</p></div>
         <div class="cap"><p class="ch">ART · CO₂ · EEG</p><h3>Risk prediction around surgery and in intensive care</h3><p>Death, delirium, unplanned ICU transfer, kidney injury, airway and breathing failure, and the lasting pain and long-term opioid use that can follow an operation.</p></div>
@@ -579,6 +586,102 @@
       var rt; window.addEventListener('resize', function(){
         clearTimeout(rt); rt = setTimeout(build, 180);
       }, {passive:true});
+    }
+
+    // ---- capability cards wired as nodes ----
+    var capSec = document.getElementById('capabilities');
+    var capCv = document.getElementById('capnet');
+    if(capSec && capCv && capCv.getContext && !reduce){
+      var cx2 = capCv.getContext('2d');
+      var cards = [], links = [], cpulse = [], capAccent = '#1B4D3E';
+      try{ capAccent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || capAccent; }catch(e){}
+
+      function rgba2(hex, a){
+        var h = hex.replace('#',''); if(h.length===3) h = h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+        var n = parseInt(h,16);
+        return 'rgba(' + ((n>>16)&255) + ',' + ((n>>8)&255) + ',' + (n&255) + ',' + a + ')';
+      }
+
+      function capBuild(){
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var w = capSec.clientWidth, h = capSec.clientHeight;
+        if(!w || !h) return;
+        capCv.width = Math.round(w*dpr); capCv.height = Math.round(h*dpr);
+        cx2.setTransform(dpr,0,0,dpr,0,0);
+
+        var base = capSec.getBoundingClientRect();
+        cards = [];
+        Array.prototype.forEach.call(capSec.querySelectorAll('.cap'), function(el){
+          var b = el.getBoundingClientRect();
+          cards.push({
+            cxp: b.left - base.left + b.width/2,
+            cyp: b.top  - base.top  + b.height/2,
+            l: b.left - base.left, r: b.left - base.left + b.width,
+            t: b.top - base.top,  bt: b.top - base.top + b.height
+          });
+        });
+
+        // link cards that are true grid neighbours: same row, or stacked
+        links = [];
+        for(var i=0;i<cards.length;i++){
+          for(var j=i+1;j<cards.length;j++){
+            var A = cards[i], B = cards[j];
+            var dx = Math.abs(A.cxp-B.cxp), dy = Math.abs(A.cyp-B.cyp);
+            var sameRow = dy < 8 && dx < (A.r-A.l)*1.8;
+            var sameCol = dx < 8 && dy < (A.bt-A.t)*1.8;
+            if(sameRow || sameCol) links.push({a:i, b:j});
+          }
+        }
+        cpulse = [];
+      }
+
+      function capEmit(){
+        if(!links.length) return;
+        var n = 1 + ((Math.random()*2)|0);
+        for(var k=0;k<n;k++){
+          var e = (Math.random()*links.length)|0;
+          cpulse.push({e:e, t:0, sp:0.020 + Math.random()*0.016, dir: Math.random()<0.5 ? 1 : -1});
+        }
+      }
+
+      var capSeen = -1;
+      function capDraw(){
+        var w = capSec.clientWidth, h = capSec.clientHeight;
+        cx2.clearRect(0,0,w,h);
+        if(beatAt !== capSeen){ capSeen = beatAt; capEmit(); }
+
+        cx2.lineWidth = 1;
+        for(var i=0;i<links.length;i++){
+          var A = cards[links[i].a], B = cards[links[i].b];
+          cx2.strokeStyle = rgba2(capAccent, 0.20);
+          cx2.beginPath(); cx2.moveTo(A.cxp,A.cyp); cx2.lineTo(B.cxp,B.cyp); cx2.stroke();
+        }
+
+        for(var p=cpulse.length-1;p>=0;p--){
+          var s = cpulse[p], L = links[s.e];
+          if(!L){ cpulse.splice(p,1); continue; }
+          s.t += s.sp;
+          if(s.t >= 1){ cpulse.splice(p,1); continue; }
+          var P = cards[L.a], Q = cards[L.b];
+          var tt = s.dir === 1 ? s.t : 1 - s.t;
+          var x = P.cxp + (Q.cxp-P.cxp)*tt, y = P.cyp + (Q.cyp-P.cyp)*tt;
+          var fade = Math.sin(s.t*Math.PI);
+          cx2.fillStyle = rgba2(capAccent, 0.9*fade);
+          cx2.beginPath(); cx2.arc(x,y,2.6,0,6.2832); cx2.fill();
+          cx2.fillStyle = rgba2(capAccent, 0.18*fade);
+          cx2.beginPath(); cx2.arc(x,y,7,0,6.2832); cx2.fill();
+        }
+        requestAnimationFrame(capDraw);
+      }
+
+      capBuild();
+      requestAnimationFrame(capDraw);
+      var crt; window.addEventListener('resize', function(){
+        clearTimeout(crt); crt = setTimeout(capBuild, 180);
+      }, {passive:true});
+      // grid settles after fonts land
+      if(document.fonts && document.fonts.ready){ document.fonts.ready.then(capBuild); }
+      setTimeout(capBuild, 700);
     }
 
     // scroll-zoom: the substrate pushes toward you as you descend
