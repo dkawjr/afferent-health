@@ -158,6 +158,50 @@
   .colo .contact a{color:var(--ink)}
   .colo .fine{font-family:var(--mono); font-size:11.5px; letter-spacing:.06em; color:var(--faint); text-transform:uppercase}
 
+  /* ---- PDF ribbon ---- */
+  .ribbon{background:var(--accent); color:var(--paper)}
+  :root[data-theme="dark"] .ribbon, :root:not([data-theme="light"]) .ribbon{color:#0E1310}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .ribbon{color:#0E1310} }
+  .ribbon .wrap{display:flex; align-items:center; gap:14px; height:44px;
+                font-family:var(--mono); font-size:12.5px; letter-spacing:.08em; text-transform:uppercase}
+  .ribbon .lbl{opacity:.78}
+  .ribbon a{color:inherit; text-decoration:none; font-weight:600; display:inline-flex; align-items:center; gap:8px;
+            border-bottom:1px solid color-mix(in srgb, currentColor 45%, transparent); padding-bottom:1px}
+  .ribbon a:hover{border-bottom-color:currentColor}
+  .ribbon .live{width:7px; height:7px; border-radius:50%; background:currentColor; flex:0 0 auto;
+                animation:blip 2.4s ease-in-out infinite}
+  @keyframes blip{0%,100%{opacity:.28; transform:scale(.82)} 12%{opacity:1; transform:scale(1)} 26%{opacity:.5}}
+  @media (max-width:560px){ .ribbon .lbl{display:none} }
+
+  /* ---- scroll-zoom monitor backdrop ---- */
+  .grid-bg{
+    position:fixed; inset:-10%; z-index:0; pointer-events:none; opacity:.55;
+    will-change:transform, opacity; transform-origin:50% 38%;
+    background-image:
+      linear-gradient(to right, color-mix(in srgb, var(--accent) 13%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--accent) 13%, transparent) 1px, transparent 1px);
+    background-size:46px 46px;
+    -webkit-mask-image:radial-gradient(ellipse 68% 58% at 50% 40%, #000 0%, transparent 74%);
+    mask-image:radial-gradient(ellipse 68% 58% at 50% 40%, #000 0%, transparent 74%);
+  }
+  header.mast, main, footer.colo, .ribbon{position:relative; z-index:1}
+
+  /* ---- live trace ---- */
+  .wave{position:relative}
+  .wave svg{overflow:visible}
+  #traceDim{stroke:color-mix(in srgb, var(--accent) 26%, transparent)}
+  #tracePulse{stroke:var(--accent); stroke-width:2}
+  .sweep{fill:var(--accent)}
+  .sweep-halo{fill:color-mix(in srgb, var(--accent) 22%, transparent)}
+
+  /* ---- LinkedIn pill ---- */
+  .li{display:inline-flex; align-items:center; gap:7px; margin-top:14px;
+      font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase;
+      color:var(--muted); border:1px solid var(--rule); border-radius:2px; padding:6px 11px;
+      transition:border-color .16s ease, color .16s ease, background .16s ease}
+  .li:hover{color:var(--ink); border-color:var(--accent); background:var(--wash)}
+  .li svg{display:block; color:var(--accent)}
+
   /* ---- reveal ---- */
   .rv{opacity:0; transform:translateY(12px); transition:opacity .5s ease, transform .5s ease}
   .rv.in{opacity:1; transform:none}
@@ -170,6 +214,18 @@
 
 </head>
 <body>
+<div class="grid-bg" id="gridbg" aria-hidden="true"></div>
+
+<div class="ribbon">
+  <div class="wrap">
+    <span class="live" aria-hidden="true"></span>
+    <span class="lbl">Capability statement</span>
+    <a href="Afferent_Health_Capability_Statement.pdf" target="_blank" rel="noopener">
+      Download the one-page PDF <span aria-hidden="true">&darr;</span>
+    </a>
+  </div>
+</div>
+
 <header class="mast">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Afferent home">
@@ -183,7 +239,7 @@
       <a href="#team">Team</a>
       <a href="#evidence">Evidence</a>
       <a href="#method">Approach</a>
-      <a href="#contact">Contact</a>
+      <a href="Afferent_Health_Capability_Statement.pdf" target="_blank" rel="noopener">PDF</a>
     </nav>
   </div>
 </header>
@@ -192,21 +248,44 @@
 
   <section class="hero" aria-label="Introduction">
     <div class="wrap">
-      <p class="eyebrow">Surgery &amp; Critical-Care Intelligence</p>
-      <h1>The physiology is already speaking. We make it legible.</h1>
-      <p class="sub">Afferent Health turns the data a health system already collects - waveforms, monitor streams, labs, and the electronic record - into early, accountable warning of the events around surgery and in intensive care that carry the most cost and risk.</p>
+      <p class="eyebrow">Healthcare Intelligence</p>
+      <h1>The data is already speaking. We make it legible.</h1>
+      <p class="sub">Afferent Health turns the data a health system already collects - waveforms, monitor streams, labs, and the electronic record - into early, accountable warning of the events that carry the most cost and risk.</p>
       <p class="tag">Clinical science, engineered for trust</p>
       <a class="more" href="#evidence">Read the evidence <span class="arw" aria-hidden="true">&rarr;</span></a>
     </div>
     <div class="wave" aria-hidden="true">
-      <svg viewBox="0 0 1600 80" preserveAspectRatio="none"><path id="trace" d=""/></svg>
+      <svg viewBox="0 0 1600 80" preserveAspectRatio="none">
+        <path id="traceDim" d=""/>
+        <path id="tracePulse" d=""/>
+        <circle id="sweepHalo" class="sweep-halo" r="9" cx="0" cy="50"/>
+        <circle id="sweepDot" class="sweep" r="3.4" cx="0" cy="50"/>
+      </svg>
     </div>
   </section>
 
   <section class="abstract" id="about">
     <div class="wrap">
       <p class="eyebrow">Positioning</p>
-      <p class="lead">Afferent is a clinical-AI firm built around a physician-scientist bench. We build models that read the entire high-resolution physiologic record - arterial pressure, capnography, pulse oximetry, EEG, laboratory values, and the electronic record - and turn it into early warning of costly events: death, postoperative delirium, unplanned ICU transfer, kidney injury, respiratory failure, and the chronic pain and long-term opioid use that begin in the same window. We choose the architecture that performs best. Not every such model can be made fully explainable, and we do not pretend otherwise; what we guarantee is that it is accountable. Where a model admits explanation, we can name the clinical and physiologic features it is using. Where it does not, we say so and earn trust by other means. We integrate practical clinical experience with AI modeling expertise to deliver products that are clinically implementable as well as scientifically sound.</p>
+      <h2 style="max-width:22ch">A clinical-AI firm built around a physician-scientist bench.</h2>
+      <div class="method-grid" style="margin-top:52px">
+        <div class="principle">
+          <p class="ch">We read the whole record</p>
+          <p>Arterial pressure, capnography, pulse oximetry, EEG, laboratory values, and the electronic record - learned together, not one monitor at a time.</p>
+        </div>
+        <div class="principle">
+          <p class="ch">We predict what costs the most</p>
+          <p>Death, delirium, unplanned ICU transfer, kidney injury, respiratory failure, and the lasting pain and opioid use that can follow an operation.</p>
+        </div>
+        <div class="principle">
+          <p class="ch">We stay accountable</p>
+          <p>Not every high-capacity model can be made fully explainable. Where one can, we name the features it uses. Where it cannot, we say so and earn trust by other means.</p>
+        </div>
+        <div class="principle">
+          <p class="ch">We build things that get used</p>
+          <p>Practical clinical experience paired with AI modeling, so what we deliver is clinically implementable as well as scientifically sound.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -249,11 +328,11 @@
         </div>
         <div class="person">
           <div class="mono-mark" aria-hidden="true">JS</div>
-          <div><h3>Joseph R. Scarpa, MD-PhD</h3><p class="role">Clinical Principal</p><p>Assistant Professor of Anesthesiology, Weill Cornell Medicine, and Englander Institute for Precision Medicine. NIA-funded principal investigator (R03 AG095722, biological age and surgical outcomes). Perioperative machine learning and onco-anesthesiology.</p></div>
+          <div><h3>Joseph R. Scarpa, MD-PhD</h3><p class="role">Co-Founder · Clinical Principal</p><p>Assistant Professor of Anesthesiology, Weill Cornell Medicine, and Englander Institute for Precision Medicine. NIA-funded principal investigator (R03 AG095722, biological age and surgical outcomes). Perioperative machine learning and onco-anesthesiology.</p></div>
         </div>
         <div class="person">
           <div class="mono-mark" aria-hidden="true">RC</div>
-          <div><h3>Ruben Coen-Cagli, PhD</h3><p class="role">Scientific Principal</p><p>Associate Professor, Albert Einstein College of Medicine. PhD in physics; 25 years developing machine-learning methods and theory for high-dimensional signals. Continuously NIH-funded principal investigator (two NEI R01s and an NIDA RF1), with NSF support and an NVIDIA early-adopter award.</p></div>
+          <div><h3>Ruben Coen-Cagli, PhD</h3><p class="role">Co-Founder · Scientific Principal</p><p>Associate Professor, Albert Einstein College of Medicine. PhD in physics; 25 years developing machine-learning methods and theory for high-dimensional signals. Continuously NIH-funded principal investigator (two NEI R01s and an NIDA RF1), with NSF support and an NVIDIA early-adopter award.</p></div>
         </div>
       </div>
     </div>
@@ -286,17 +365,9 @@
     </div>
   </section>
 
-  <section class="roadmap" id="roadmap">
+  <section id="partners" style="padding-bottom:clamp(48px,8vw,88px)">
     <div class="wrap prose">
-      <p class="eyebrow">Direction</p>
-      <p>We are extending the multimodal approach across the perioperative and critical-care events where earlier, better-explained warning changes management: kidney injury, delirium, respiratory failure, hemodynamic instability, and persistent postoperative pain and long-term opioid use. Near-term work moves our internally validated results into external validation and the peer-reviewed record. As that evidence base matures, we bring these models to partners as validated, deployable clinical science.</p>
-    </div>
-  </section>
-
-  <section id="contact" style="padding-bottom:clamp(48px,8vw,88px)">
-    <div class="wrap prose">
-      <p class="eyebrow">Contact</p>
-      <h2 style="max-width:20ch">We work with a selective set of partners who take clinical rigor as seriously as we do.</h2>
+      <h2 style="max-width:20ch">We work with a selective set of partners who take this work as seriously as we do.</h2>
     </div>
   </section>
 
@@ -307,12 +378,11 @@
     <div class="grid">
       <div>
         <div class="brand"><svg width="30" height="14" viewBox="0 0 88 32" aria-hidden="true"><path d="M0,16 L18,16 L24,4 L30,25 L35,11 L41,16 L88,16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg><em>Afferent Health</em></div>
-        <div class="fine">Clinical AI · Perioperative &amp; Critical Care</div>
+        <div class="fine">Clinical AI · Healthcare Intelligence</div>
       </div>
       <div class="contact">
-        Inquiries&nbsp;&nbsp;<a href="mailto:hello@afferent.health">hello@afferent.health</a><br>
-        Location&nbsp;&nbsp;New York, NY<br>
-        <span style="color:var(--faint)">Small business · NAICS 541512</span>
+        New York, NY<br>
+        <a href="Afferent_Health_Capability_Statement.pdf" target="_blank" rel="noopener">Capability statement (PDF)</a>
       </div>
     </div>
   </div>
@@ -320,25 +390,75 @@
 
 <script>
   (function(){
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     // signature arterial trace - generated, not hand-authored
-    var path = document.getElementById('trace');
-    if(path){
+    var dim = document.getElementById('traceDim');
+    var pulse = document.getElementById('tracePulse');
+    var dot = document.getElementById('sweepDot');
+    var halo = document.getElementById('sweepHalo');
+
+    if(dim && pulse){
       var W=1600, beat=200, n=W/beat, d=['M0,50'];
       for(var i=0;i<n;i++){var b=i*beat;
         d.push('L'+(b+58)+',50 L'+(b+72)+',13 L'+(b+84)+',40 L'+(b+94)+',30 L'+(b+106)+',50 L'+(b+beat)+',50');
       }
-      path.setAttribute('d', d.join(' '));
-      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if(!reduce){
-        var len = path.getTotalLength();
-        path.style.strokeDasharray = len;
-        path.style.strokeDashoffset = len;
-        // draw once on load
-        requestAnimationFrame(function(){
-          path.style.transition = 'stroke-dashoffset 1.5s ease-out';
-          requestAnimationFrame(function(){ path.style.strokeDashoffset = '0'; });
-        });
+      var dStr = d.join(' ');
+      dim.setAttribute('d', dStr);
+      pulse.setAttribute('d', dStr);
+
+      var len = pulse.getTotalLength();
+
+      if(reduce){
+        // static: full trace, no sweep
+        pulse.style.display = 'none';
+        if(dot) dot.style.display = 'none';
+        if(halo) halo.style.display = 'none';
+      } else {
+        // a bright segment travels the trace continuously, like a monitor sweep
+        var seg = len * 0.16;
+        pulse.style.strokeDasharray = seg + ' ' + (len - seg);
+        var PERIOD = 5200; // ms for one full pass
+        var start = null;
+
+        function frame(ts){
+          if(start === null) start = ts;
+          var t = ((ts - start) % PERIOD) / PERIOD;      // 0 -> 1
+          pulse.style.strokeDashoffset = String(-t * len);
+
+          // head of the bright segment, wrapped into [0, len]
+          var headLen = (t * len + seg) % len;
+          if(dot || halo){
+            var p = pulse.getPointAtLength(headLen);
+            if(dot){ dot.setAttribute('cx', p.x); dot.setAttribute('cy', p.y); }
+            if(halo){ halo.setAttribute('cx', p.x); halo.setAttribute('cy', p.y); }
+          }
+          requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
       }
+    }
+
+    // scroll-zoom monitor backdrop
+    var bg = document.getElementById('gridbg');
+    if(bg && !reduce){
+      var ticking = false;
+      function paint(){
+        var h = window.innerHeight || 1;
+        var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+        var p = Math.min(y / (h * 1.6), 1);            // 0 at top -> 1 once well scrolled
+        var scale = 1 + p * 0.85;                       // zoom in as you descend
+        bg.style.transform = 'scale(' + scale.toFixed(4) + ')';
+        bg.style.opacity = (0.55 * (1 - p * 0.82)).toFixed(3);
+        ticking = false;
+      }
+      window.addEventListener('scroll', function(){
+        if(!ticking){ ticking = true; requestAnimationFrame(paint); }
+      }, {passive:true});
+      window.addEventListener('resize', paint, {passive:true});
+      paint();
+    } else if(bg && reduce){
+      bg.style.opacity = '0.28';
     }
     // quiet scroll reveals
     var els = document.querySelectorAll('section .wrap > *');
