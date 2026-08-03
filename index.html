@@ -22,7 +22,7 @@
     --mono: ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
     --wrap: min(1520px, 93vw); --measure: 68ch;
     --alert:#C6402F;
-    --step: clamp(72px, 11vw, 140px);
+    --step: clamp(64px, 7vw, 104px);
   }
   @media (prefers-color-scheme: dark){
     :root{
@@ -44,7 +44,7 @@
   html{-webkit-text-size-adjust:100%}
   body{
     margin:0; background:var(--paper); color:var(--ink);
-    font-family:var(--sans); font-size:18px; line-height:1.62;
+    font-family:var(--sans); font-size:19.5px; line-height:1.6;
     -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
     overflow-x:hidden;
   }
@@ -58,9 +58,9 @@
 
   /* ---- type ---- */
   h1,h2,h3{font-family:var(--serif); font-weight:400; text-wrap:balance; margin:0}
-  h1{font-size:clamp(40px,6vw,68px); line-height:1.06; letter-spacing:-.012em}
-  h2{font-size:clamp(28px,3.6vw,40px); line-height:1.14; letter-spacing:-.006em}
-  h3{font-size:20px; line-height:1.28}
+  h1{font-size:clamp(44px,7.4vw,96px); line-height:1.02; letter-spacing:-.02em}
+  h2{font-size:clamp(30px,4.2vw,50px); line-height:1.12; letter-spacing:-.012em}
+  h3{font-size:22px; line-height:1.26}
   p{margin:0}
 
   .eyebrow{
@@ -92,11 +92,11 @@
   @media (max-width:720px){ nav.top{display:none} }
 
   /* ---- hero ---- */
-  .hero{padding-top:clamp(70px,12vw,130px); padding-bottom:0}
-  .hero h1{max-width:16ch}
-  .hero .sub{max-width:60ch; margin-top:26px; color:var(--muted); font-size:clamp(18px,2vw,21px); line-height:1.5}
-  .hero .tag{margin-top:20px; font-family:var(--mono); font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent)}
-  .hero .more{display:inline-flex; align-items:center; gap:9px; margin-top:40px; font-weight:500; color:var(--ink)}
+  .hero{padding-top:clamp(80px,13vw,150px); padding-bottom:0; text-align:center}
+  .hero h1{max-width:19ch; margin:0 auto}
+  .hero .sub{max-width:62ch; margin:30px auto 0; color:var(--muted); font-size:clamp(19px,1.5vw,23px); line-height:1.5}
+  .hero .tag{margin-top:26px; font-family:var(--mono); font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent)}
+  .hero .more{display:inline-flex; align-items:center; gap:9px; margin-top:44px; font-weight:500; color:var(--ink)}
   .hero .more .arw{color:var(--accent); transition:transform .18s ease}
   .hero .more:hover .arw{transform:translateX(4px)}
   .wave{width:100%; margin-top:clamp(56px,9vw,104px); display:block}
@@ -121,16 +121,25 @@
   @media (max-width:860px){ .cap-grid{grid-template-columns:1fr 1fr} }
   @media (max-width:560px){ .cap-grid{grid-template-columns:1fr} }
 
-  /* ---- differentiators (definition table) ---- */
-  .dl{margin-top:8px; border-top:1px solid var(--rule)}
-  .dl .row{display:grid; grid-template-columns:minmax(200px,300px) 1fr; gap:32px; padding:26px 2px; border-bottom:1px solid var(--rule); align-items:baseline}
-  .dl dt{font-family:var(--serif); font-size:21px; color:var(--ink)}
+  /* ---- differentiators as a numbered grid ---- */
+  .dl{margin-top:14px; display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+      background:var(--rule); border:1px solid var(--rule); counter-reset:dif}
+  .dl .row{background:var(--paper); padding:34px 30px 38px; counter-increment:dif;
+           transition:background .28s ease, transform .28s ease}
+  .dl .row::before{content:counter(dif,decimal-leading-zero);
+                   font-family:var(--mono); font-size:11.5px; letter-spacing:.12em; color:var(--accent);
+                   display:block; margin-bottom:18px; opacity:.75}
+  .dl .row:hover{background:var(--wash)}
+  .dl dt{font-family:var(--serif); font-size:23px; line-height:1.24; color:var(--ink); margin-bottom:12px}
   .dl dd{margin:0; color:var(--muted); font-size:16.5px; line-height:1.55}
-  @media (max-width:640px){ .dl .row{grid-template-columns:1fr; gap:10px} }
+  @media (max-width:980px){ .dl{grid-template-columns:1fr 1fr} }
+  @media (max-width:640px){ .dl{grid-template-columns:1fr} }
 
   /* ---- team ---- */
   .team-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:8px}
-  .person{background:var(--paper); padding:32px 30px 36px; display:flex; gap:20px}
+  .person{background:var(--paper); padding:32px 30px 36px; display:flex; gap:20px;
+          transition:background .28s ease}
+  .person:hover{background:var(--wash)}
   .mono-mark{flex:0 0 auto; width:46px; height:46px; border:1px solid var(--rule); display:grid; place-items:center; font-family:var(--mono); font-size:14px; letter-spacing:.04em; color:var(--accent)}
   .person h3{margin-bottom:4px}
   .person .role{font-family:var(--mono); font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-bottom:14px}
@@ -141,18 +150,24 @@
   .evidence{background:var(--surface)}
   .note{max-width:60ch; color:var(--muted); margin-bottom:8px}
   .refs{margin-top:34px; border-top:1px solid var(--rule)}
-  .ref{display:grid; grid-template-columns:1fr auto; gap:10px 28px; padding:22px 2px; border-bottom:1px solid var(--rule); align-items:baseline}
-  .ref .t{font-family:var(--serif); font-size:19px; color:var(--ink); line-height:1.3}
-  .ref .f{color:var(--muted); font-size:15px; margin-top:6px; grid-column:1/2}
+  .ref{display:grid; grid-template-columns:1fr auto; gap:10px 28px; padding:22px 14px; margin:0 -14px;
+       border-bottom:1px solid var(--rule); align-items:baseline; transition:background .24s ease}
+  .ref:hover{background:var(--wash)}
+  .ref .t{font-family:var(--serif); font-size:20px; color:var(--ink); line-height:1.3}
+  .ref .f{color:var(--muted); font-size:15.5px; margin-top:6px; grid-column:1/2}
   .ref .v{font-family:var(--mono); font-size:12px; letter-spacing:.06em; color:var(--accent); text-align:right; white-space:nowrap}
   @media (max-width:640px){ .ref{grid-template-columns:1fr} .ref .v{text-align:left} }
 
   /* ---- method ---- */
-  .method-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:44px 56px; margin-top:12px}
-  .principle .ch{font-family:var(--mono); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:14px}
-  .principle h3{margin-bottom:10px}
-  .principle p{color:var(--muted); font-size:16px; line-height:1.55; max-width:46ch}
-  @media (max-width:640px){ .method-grid{grid-template-columns:1fr; gap:36px} }
+  .method-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; margin-top:14px;
+               background:var(--rule); border:1px solid var(--rule)}
+  .principle{background:var(--paper); padding:32px 28px 36px; transition:background .28s ease}
+  .principle:hover{background:var(--wash)}
+  .principle .ch{font-family:var(--mono); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:16px}
+  .principle h3{margin-bottom:11px}
+  .principle p{color:var(--muted); font-size:16px; line-height:1.55}
+  @media (max-width:1100px){ .method-grid{grid-template-columns:repeat(2,1fr)} }
+  @media (max-width:640px){ .method-grid{grid-template-columns:1fr} }
 
   /* ---- roadmap ---- */
   .roadmap .prose p{color:var(--ink); font-size:clamp(18px,2vw,21px); line-height:1.55; max-width:58ch}
@@ -165,20 +180,20 @@
   .colo .contact a{color:var(--ink)}
   .colo .fine{font-family:var(--mono); font-size:11.5px; letter-spacing:.06em; color:var(--faint); text-transform:uppercase}
 
-  /* ---- alert ribbon ---- */
-  .ribbon{background:var(--alert); color:#FFF1EC}
-  .ribbon .wrap{display:flex; align-items:center; gap:14px; height:44px;
-                font-family:var(--mono); font-size:12.5px; letter-spacing:.08em; text-transform:uppercase}
-  .ribbon .lbl{opacity:.82}
+  /* ---- ribbon: quiet green bar, one red pulse ---- */
+  .ribbon{background:var(--accent); color:#F3F7F3}
+  .ribbon .wrap{display:flex; align-items:center; gap:14px; height:46px;
+                font-family:var(--mono); font-size:12.5px; letter-spacing:.09em; text-transform:uppercase}
+  .ribbon .lbl{opacity:.75}
   .ribbon a{color:inherit; text-decoration:none; font-weight:600; display:inline-flex; align-items:center; gap:8px;
-            border-bottom:1px solid color-mix(in srgb, currentColor 45%, transparent); padding-bottom:1px}
+            border-bottom:1px solid color-mix(in srgb, currentColor 40%, transparent); padding-bottom:1px}
   .ribbon a:hover{border-bottom-color:currentColor}
-  .ribbon .live{width:8px; height:8px; border-radius:50%; background:#FFF1EC; flex:0 0 auto;
-                animation:blip 2.2s ease-in-out infinite}
+  .ribbon .live{width:8px; height:8px; border-radius:50%; background:var(--alert); flex:0 0 auto;
+                animation:blip 2.4s ease-in-out infinite}
   @keyframes blip{
-    0%,100%{opacity:.25; box-shadow:0 0 0 0 rgba(255,241,236,0)}
-    10%{opacity:1; box-shadow:0 0 0 0 rgba(255,241,236,.55)}
-    34%{opacity:.45; box-shadow:0 0 0 9px rgba(255,241,236,0)}
+    0%,100%{opacity:.3; box-shadow:0 0 0 0 rgba(198,64,47,0)}
+    10%{opacity:1; box-shadow:0 0 0 0 rgba(198,64,47,.7)}
+    36%{opacity:.5; box-shadow:0 0 0 10px rgba(198,64,47,0)}
   }
   @media (max-width:560px){ .ribbon .lbl{display:none} }
 
@@ -186,18 +201,20 @@
   .bg-layer{position:fixed; inset:-8%; z-index:0; pointer-events:none;
             will-change:transform, opacity; transform-origin:50% 38%}
   .grid-bg{
-    opacity:.42;
+    opacity:.30;
     background-image:
-      linear-gradient(to right, color-mix(in srgb, var(--accent) 12%, transparent) 1px, transparent 1px),
-      linear-gradient(to bottom, color-mix(in srgb, var(--accent) 12%, transparent) 1px, transparent 1px);
-    background-size:52px 52px;
-    -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 40%, #000 0%, transparent 74%);
-    mask-image:radial-gradient(ellipse 70% 60% at 50% 40%, #000 0%, transparent 74%);
+      linear-gradient(to right, color-mix(in srgb, var(--accent) 10%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--accent) 10%, transparent) 1px, transparent 1px);
+    background-size:60px 60px;
+    /* clear in the middle, where the reading happens */
+    -webkit-mask-image:radial-gradient(ellipse 62% 58% at 50% 44%, transparent 0%, #000 88%);
+    mask-image:radial-gradient(ellipse 62% 58% at 50% 44%, transparent 0%, #000 88%);
   }
-  #net{width:100%; height:100%; display:block; opacity:.9}
+  #net{width:100%; height:100%; display:block}
   .net-wrap{
-    -webkit-mask-image:radial-gradient(ellipse 76% 66% at 50% 42%, #000 0%, transparent 78%);
-    mask-image:radial-gradient(ellipse 76% 66% at 50% 42%, #000 0%, transparent 78%);
+    opacity:.55;
+    -webkit-mask-image:radial-gradient(ellipse 70% 62% at 50% 46%, transparent 0%, transparent 42%, #000 96%);
+    mask-image:radial-gradient(ellipse 70% 62% at 50% 46%, transparent 0%, transparent 42%, #000 96%);
   }
   header.mast, main, footer.colo, .ribbon{position:relative; z-index:1}
 
@@ -264,7 +281,6 @@
 
   <section class="hero" aria-label="Introduction">
     <div class="wrap">
-      <p class="eyebrow">Healthcare Intelligence</p>
       <h1>The data is already speaking. We make it legible.</h1>
       <p class="sub">Afferent Health turns the data a health system already collects - waveforms, monitor streams, labs, and the electronic record - into early, accountable warning of the events that carry the most cost and risk.</p>
       <p class="tag">Clinical science and machine learning, engineered for trust and transparency</p>
@@ -280,7 +296,6 @@
 
   <section class="abstract" id="about">
     <div class="wrap">
-      <p class="eyebrow">Positioning</p>
       <h2 style="max-width:22ch">A clinical-AI firm built around a physician-scientist bench.</h2>
       <div class="method-grid" style="margin-top:52px">
         <div class="principle">
@@ -305,7 +320,6 @@
 
   <section class="capabilities" id="capabilities">
     <div class="wrap">
-      <p class="eyebrow">Capabilities</p>
       <canvas id="capnet" aria-hidden="true"></canvas>
       <div class="cap-grid">
         <div class="cap"><p class="ch">The premise</p><h3>We make the data you already collect more useful</h3><p>No new hardware and no new workflow. The signals are already recorded; we turn them into earlier warning, which means fewer patients escalated to a higher level of care, fewer deaths, and lower cost per case.</p></div>
@@ -322,14 +336,12 @@
     <div class="wrap">
       <p class="eyebrow">What sets the work apart</p>
       <dl class="dl">
-        <div class="row"><dt>A clinical bench you can put on a bid</dt><dd>We can serve as your chief medical officer and clinical principal investigator. That makes solicitations requiring named clinical leadership biddable for teams that could not credibly pursue them before, and it is the piece most integrators cannot staff.</dd></div>
-        <div class="row"><dt>We make powerful models deployable</dt><dd>On high-dimensional data the best-performing model is often not the most interpretable. Refusing it costs accuracy; fielding it blind fails the transparency and traceability principles of Executive Order 13960 that federal AI use requires. We do neither: our clinical bench verifies that predictions are physiologically coherent and leads the explainability analysis that makes a high-capacity model defensible.</dd></div>
-        <div class="row"><dt>We measure the problem before selling the solution</dt><dd>The VA surgical population is 60.0% frail or very frail against 21.3% in the private-sector NSQIP cohort (<em>JAMA Surgery</em>, 2022), the registry the standard surgical risk calculators are built from. Our first deliverable on any new population is a calibration audit, not a model.</dd></div>
-        <div class="row"><dt>The whole physiologic record</dt><dd>We use the full multimodal signal, not a convenient subset, because the earliest warning usually lives in the waveform, not the summary number.</dd></div>
-        <div class="row"><dt>Physician-scientist expertise to translate models into practice</dt><dd>Clinical judgment is in the loop from label definition through validation, the piece most engineering partners lack. It is the difference between a model that validates and a model that gets used.</dd></div>
-        <div class="row"><dt>Peer-reviewed science plus proprietary methods</dt><dd>Published clinical and computational work underwrites our methods. Our team has built both proprietary and openly published machine-learning methods for physiologic data, and is practiced at explaining them to regulators and reviewers in the terms those audiences require.</dd></div>
-        <div class="row"><dt>Public-private delivery, built to a measurable return</dt><dd>We operate comfortably as a commercial partner inside a government program and build to a case the sponsor can measure: the complications we predict are among the costliest in medicine, so earlier warning avoids spend as well as harm.</dd></div>
-        <div class="row"><dt>Evidence before assertion</dt><dd>Every claim is validated against controls and, where possible, external data before we make it, and we say plainly what has and has not been proven.</dd></div>
+        <div class="row"><dt>A clinical bench you can put on a bid</dt><dd>We can serve as your chief medical officer and clinical principal investigator, making solicitations that require named clinical leadership biddable for the first time.</dd></div>
+        <div class="row"><dt>We make powerful models deployable</dt><dd>The best-performing model is rarely the most interpretable. Refusing it costs accuracy; fielding it blind fails Executive Order 13960. We do neither.</dd></div>
+        <div class="row"><dt>We measure the problem before selling the solution</dt><dd>The VA surgical population is 60.0% frail or very frail against 21.3% in private-sector NSQIP (<em>JAMA Surgery</em>, 2022). Our first deliverable is a calibration audit, not a model.</dd></div>
+        <div class="row"><dt>The whole physiologic record</dt><dd>The full multimodal signal, not a convenient subset, because the earliest warning lives in the waveform rather than the summary number.</dd></div>
+        <div class="row"><dt>Expertise that translates models into practice</dt><dd>Clinical judgment sits in the loop from label definition through validation. It is the difference between a model that validates and one that gets used.</dd></div>
+        <div class="row"><dt>Published science, proprietary methods</dt><dd>Peer-reviewed work underwrites our methods, and we are practiced at explaining them to regulators and reviewers in the terms those audiences require.</dd></div>
       </dl>
     </div>
   </section>
@@ -504,8 +516,8 @@
       }
 
       function emit(){
-        // depolarise a few input-layer nodes; each signal walks the graph
-        for(var k=0;k<5;k++){
+        // one quiet signal per beat, so the substrate breathes rather than swarms
+        for(var k=0;k<1;k++){
           var cands = [];
           for(var e=0;e<edges.length;e++) if(nodes[edges[e].a].l === 0) cands.push(e);
           if(!cands.length) return;
@@ -546,36 +558,40 @@
             var next = [];
             for(var e3=0;e3<edges.length;e3++) if(edges[e3].a === ed.b) next.push(e3);
             signals.splice(s,1);
-            if(next.length && Math.random() < 0.86){
-              var take = Math.random() < 0.34 ? 2 : 1;
-              for(var m=0;m<take && next.length;m++){
-                var pick = (Math.random()*next.length)|0;
-                signals.push({e:next[pick], t:0, sp:0.010 + Math.random()*0.012});
-                next.splice(pick,1);
-              }
+            // never branch: one signal in, one signal out, so density stays flat
+            if(next.length && Math.random() < 0.62){
+              var pick = (Math.random()*next.length)|0;
+              signals.push({e:next[pick], t:0, sp:0.006 + Math.random()*0.006});
             }
             continue;
           }
           var x = P.x + (Q.x-P.x)*sg.t, y = P.y + (Q.y-P.y)*sg.t;
-          var tail = Math.max(0, sg.t - 0.34);
-          ctx.strokeStyle = rgba(accent, 0.5);
-          ctx.lineWidth = 1.5;
+          var tail = Math.max(0, sg.t - 0.30);
+          var soft = Math.sin(sg.t*Math.PI);
+          ctx.strokeStyle = rgba(accent, 0.20*soft);
+          ctx.lineWidth = 1.3;
           ctx.beginPath();
           ctx.moveTo(P.x + (Q.x-P.x)*tail, P.y + (Q.y-P.y)*tail);
           ctx.lineTo(x,y); ctx.stroke();
-          ctx.fillStyle = rgba(accent, 0.85);
-          ctx.beginPath(); ctx.arc(x,y,1.9,0,6.2832); ctx.fill();
+          ctx.fillStyle = rgba(accent, 0.34*soft);
+          ctx.beginPath(); ctx.arc(x,y,1.7,0,6.2832); ctx.fill();
           ctx.lineWidth = 1;
         }
 
+        // nodes breathe on their own, independent of any travelling signal
+        var tsec = (ts - t0) / 1000;
         for(var j=0;j<nodes.length;j++){
           var nd = nodes[j];
           var lit = Math.max(0, nd.lit);
-          ctx.fillStyle = rgba(accent, 0.26 + lit*0.62);
-          ctx.beginPath(); ctx.arc(nd.x, nd.y, nd.r + lit*2.2, 0, 6.2832); ctx.fill();
-          if(lit > 0.05){
-            ctx.fillStyle = rgba(accent, lit*0.13);
-            ctx.beginPath(); ctx.arc(nd.x, nd.y, nd.r + 9*lit, 0, 6.2832); ctx.fill();
+          var breathe = 0.5 + 0.5*Math.sin(tsec*0.9 + nd.ph*2.1);
+          var a = 0.20 + breathe*0.22 + lit*0.55;
+          var rr = nd.r * (0.86 + breathe*0.34) + lit*2.6;
+          ctx.fillStyle = rgba(accent, a);
+          ctx.beginPath(); ctx.arc(nd.x, nd.y, rr, 0, 6.2832); ctx.fill();
+          var halo = breathe*0.05 + lit*0.16;
+          if(halo > 0.02){
+            ctx.fillStyle = rgba(accent, halo);
+            ctx.beginPath(); ctx.arc(nd.x, nd.y, rr + 5 + 8*lit, 0, 6.2832); ctx.fill();
           }
         }
         requestAnimationFrame(draw);
