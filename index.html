@@ -399,9 +399,21 @@
     var halo = document.getElementById('sweepHalo');
 
     if(dim && pulse){
-      var W=1600, beat=200, n=W/beat, d=['M0,50'];
-      for(var i=0;i<n;i++){var b=i*beat;
-        d.push('L'+(b+58)+',50 L'+(b+72)+',13 L'+(b+84)+',40 L'+(b+94)+',30 L'+(b+106)+',50 L'+(b+beat)+',50');
+      // Real ECG (lead II) morphology, synthesized as a sum of Gaussians for the
+      // P, Q, R, S and T deflections - the standard McSharry-style ECG model.
+      // phase runs 0..1 across one RR interval; amplitudes are relative to R = 1.
+      function gauss(a, mu, s, phase){ var d = phase - mu; return a * Math.exp(-(d*d)/(2*s*s)); }
+      function ecg(phase){
+        return gauss( 0.10, 0.200, 0.0280, phase)   // P wave, rounded, atrial depolarisation
+             + gauss(-0.09, 0.355, 0.0080, phase)   // Q, small septal downstroke
+             + gauss( 1.00, 0.385, 0.0095, phase)   // R, tall and narrow
+             + gauss(-0.22, 0.420, 0.0110, phase)   // S
+             + gauss( 0.28, 0.620, 0.0480, phase);  // T wave, broad, upright in lead II
+      }
+      var W=1600, beatPx=200, baseY=54, ampPx=44, stepPx=2, d=[];
+      for(var x=0; x<=W; x+=stepPx){
+        var y = baseY - ampPx * ecg((x % beatPx) / beatPx);
+        d.push((x === 0 ? 'M' : 'L') + x + ',' + y.toFixed(2));
       }
       var dStr = d.join(' ');
       dim.setAttribute('d', dStr);
@@ -418,7 +430,7 @@
         // a bright segment travels the trace continuously, like a monitor sweep
         var seg = len * 0.16;
         pulse.style.strokeDasharray = seg + ' ' + (len - seg);
-        var PERIOD = 5200; // ms for one full pass
+        var PERIOD = 7000; // one pass = 8 beats, so ~69 bpm
         var start = null;
 
         function frame(ts){
