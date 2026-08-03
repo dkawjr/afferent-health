@@ -20,7 +20,8 @@
     --serif: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
     --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
     --mono: ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
-    --wrap: 1180px; --measure: 66ch;
+    --wrap: min(1520px, 93vw); --measure: 68ch;
+    --alert:#C6402F;
     --step: clamp(72px, 11vw, 140px);
   }
   @media (prefers-color-scheme: dark){
@@ -158,31 +159,39 @@
   .colo .contact a{color:var(--ink)}
   .colo .fine{font-family:var(--mono); font-size:11.5px; letter-spacing:.06em; color:var(--faint); text-transform:uppercase}
 
-  /* ---- PDF ribbon ---- */
-  .ribbon{background:var(--accent); color:var(--paper)}
-  :root[data-theme="dark"] .ribbon, :root:not([data-theme="light"]) .ribbon{color:#0E1310}
-  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .ribbon{color:#0E1310} }
+  /* ---- alert ribbon ---- */
+  .ribbon{background:var(--alert); color:#FFF1EC}
   .ribbon .wrap{display:flex; align-items:center; gap:14px; height:44px;
                 font-family:var(--mono); font-size:12.5px; letter-spacing:.08em; text-transform:uppercase}
-  .ribbon .lbl{opacity:.78}
+  .ribbon .lbl{opacity:.82}
   .ribbon a{color:inherit; text-decoration:none; font-weight:600; display:inline-flex; align-items:center; gap:8px;
             border-bottom:1px solid color-mix(in srgb, currentColor 45%, transparent); padding-bottom:1px}
   .ribbon a:hover{border-bottom-color:currentColor}
-  .ribbon .live{width:7px; height:7px; border-radius:50%; background:currentColor; flex:0 0 auto;
-                animation:blip 2.4s ease-in-out infinite}
-  @keyframes blip{0%,100%{opacity:.28; transform:scale(.82)} 12%{opacity:1; transform:scale(1)} 26%{opacity:.5}}
+  .ribbon .live{width:8px; height:8px; border-radius:50%; background:#FFF1EC; flex:0 0 auto;
+                animation:blip 2.2s ease-in-out infinite}
+  @keyframes blip{
+    0%,100%{opacity:.25; box-shadow:0 0 0 0 rgba(255,241,236,0)}
+    10%{opacity:1; box-shadow:0 0 0 0 rgba(255,241,236,.55)}
+    34%{opacity:.45; box-shadow:0 0 0 9px rgba(255,241,236,0)}
+  }
   @media (max-width:560px){ .ribbon .lbl{display:none} }
 
-  /* ---- scroll-zoom monitor backdrop ---- */
+  /* ---- living substrate: grid + neural network ---- */
+  .bg-layer{position:fixed; inset:-8%; z-index:0; pointer-events:none;
+            will-change:transform, opacity; transform-origin:50% 38%}
   .grid-bg{
-    position:fixed; inset:-10%; z-index:0; pointer-events:none; opacity:.55;
-    will-change:transform, opacity; transform-origin:50% 38%;
+    opacity:.42;
     background-image:
-      linear-gradient(to right, color-mix(in srgb, var(--accent) 13%, transparent) 1px, transparent 1px),
-      linear-gradient(to bottom, color-mix(in srgb, var(--accent) 13%, transparent) 1px, transparent 1px);
-    background-size:46px 46px;
-    -webkit-mask-image:radial-gradient(ellipse 68% 58% at 50% 40%, #000 0%, transparent 74%);
-    mask-image:radial-gradient(ellipse 68% 58% at 50% 40%, #000 0%, transparent 74%);
+      linear-gradient(to right, color-mix(in srgb, var(--accent) 12%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--accent) 12%, transparent) 1px, transparent 1px);
+    background-size:52px 52px;
+    -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 40%, #000 0%, transparent 74%);
+    mask-image:radial-gradient(ellipse 70% 60% at 50% 40%, #000 0%, transparent 74%);
+  }
+  #net{width:100%; height:100%; display:block; opacity:.9}
+  .net-wrap{
+    -webkit-mask-image:radial-gradient(ellipse 76% 66% at 50% 42%, #000 0%, transparent 78%);
+    mask-image:radial-gradient(ellipse 76% 66% at 50% 42%, #000 0%, transparent 78%);
   }
   header.mast, main, footer.colo, .ribbon{position:relative; z-index:1}
 
@@ -214,7 +223,8 @@
 
 </head>
 <body>
-<div class="grid-bg" id="gridbg" aria-hidden="true"></div>
+<div class="bg-layer grid-bg" id="gridbg" aria-hidden="true"></div>
+<div class="bg-layer net-wrap" id="netwrap" aria-hidden="true"><canvas id="net"></canvas></div>
 
 <div class="ribbon">
   <div class="wrap">
@@ -235,11 +245,11 @@
       <em>Afferent Health</em>
     </a>
     <nav class="top" aria-label="Primary">
-      <a href="#capabilities">Capabilities</a>
+      <a href="#capabilities">What we do</a>
       <a href="#team">Team</a>
       <a href="#evidence">Evidence</a>
       <a href="#method">Approach</a>
-      <a href="Afferent_Health_Capability_Statement.pdf" target="_blank" rel="noopener">PDF</a>
+      <a href="Afferent_Health_Capability_Statement.pdf" target="_blank" rel="noopener">Capability statement</a>
     </nav>
   </div>
 </header>
@@ -251,15 +261,13 @@
       <p class="eyebrow">Healthcare Intelligence</p>
       <h1>The data is already speaking. We make it legible.</h1>
       <p class="sub">Afferent Health turns the data a health system already collects - waveforms, monitor streams, labs, and the electronic record - into early, accountable warning of the events that carry the most cost and risk.</p>
-      <p class="tag">Clinical science, engineered for trust</p>
+      <p class="tag">Clinical science and machine learning, engineered for trust and transparency</p>
       <a class="more" href="#evidence">Read the evidence <span class="arw" aria-hidden="true">&rarr;</span></a>
     </div>
     <div class="wave" aria-hidden="true">
       <svg viewBox="0 0 1600 80" preserveAspectRatio="none">
         <path id="traceDim" d=""/>
         <path id="tracePulse" d=""/>
-        <circle id="sweepHalo" class="sweep-halo" r="9" cx="0" cy="50"/>
-        <circle id="sweepDot" class="sweep" r="3.4" cx="0" cy="50"/>
       </svg>
     </div>
   </section>
@@ -307,6 +315,7 @@
     <div class="wrap">
       <p class="eyebrow">What sets the work apart</p>
       <dl class="dl">
+        <div class="row"><dt>A clinical bench you can put on a bid</dt><dd>We can serve as your chief medical officer and clinical principal investigator. That makes solicitations requiring named clinical leadership biddable for teams that could not credibly pursue them before, and it is the piece most integrators cannot staff.</dd></div>
         <div class="row"><dt>We make powerful models deployable</dt><dd>On high-dimensional data the best-performing model is often not the most interpretable. Refusing it costs accuracy; fielding it blind fails the transparency and traceability principles of Executive Order 13960 that federal AI use requires. We do neither: our clinical bench verifies that predictions are physiologically coherent and leads the explainability analysis that makes a high-capacity model defensible.</dd></div>
         <div class="row"><dt>We measure the problem before selling the solution</dt><dd>The VA surgical population is 60.0% frail or very frail against 21.3% in the private-sector NSQIP cohort (<em>JAMA Surgery</em>, 2022), the registry the standard surgical risk calculators are built from. Our first deliverable on any new population is a calibration audit, not a model.</dd></div>
         <div class="row"><dt>The whole physiologic record</dt><dd>We use the full multimodal signal, not a convenient subset, because the earliest warning usually lives in the waveform, not the summary number.</dd></div>
@@ -324,15 +333,18 @@
       <div class="team-grid">
         <div class="person">
           <div class="mono-mark" aria-hidden="true">AW</div>
-          <div><h3>D.K. Adrian Williams, MSc</h3><p class="role">Founder · Modeling Lead</p><p>Physician-scientist in training (MD/PhD candidate, Albert Einstein College of Medicine); inventor and modeling lead. Inventor of a calibration-free correction for pulse-oximetry skin-tone bias, and of novel methods in clinical capnography, EEG, and multimodal physiologic signal processing.</p></div>
+          <div><h3>D.K. Adrian Williams, MSc</h3><p class="role">Founder · Modeling Lead</p><p>Physician-scientist in training (MD/PhD candidate, Albert Einstein College of Medicine); inventor and modeling lead. Inventor of a calibration-free correction for pulse-oximetry skin-tone bias, and of novel methods in clinical capnography, EEG, and multimodal physiologic signal processing.</p>
+          <a class="li" href="https://www.linkedin.com/in/dkawjr/" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.3-.02-2.96-1.8-2.96-1.8 0-2.08 1.4-2.08 2.86V21H9z"/></svg>LinkedIn</a></div>
         </div>
         <div class="person">
           <div class="mono-mark" aria-hidden="true">JS</div>
-          <div><h3>Joseph R. Scarpa, MD-PhD</h3><p class="role">Co-Founder · Clinical Principal</p><p>Assistant Professor of Anesthesiology, Weill Cornell Medicine, and Englander Institute for Precision Medicine. NIA-funded principal investigator (R03 AG095722, biological age and surgical outcomes). Perioperative machine learning and onco-anesthesiology.</p></div>
+          <div><h3>Joseph R. Scarpa, MD-PhD</h3><p class="role">Co-Founder · Clinical Principal</p><p>Assistant Professor of Anesthesiology, Weill Cornell Medicine, and Englander Institute for Precision Medicine. NIA-funded principal investigator (R03 AG095722, biological age and surgical outcomes). Perioperative machine learning and onco-anesthesiology.</p>
+          <a class="li" href="https://weillcornell.org/joseph-scarpa-md-phd" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg>Weill Cornell profile</a></div>
         </div>
         <div class="person">
           <div class="mono-mark" aria-hidden="true">RC</div>
-          <div><h3>Ruben Coen-Cagli, PhD</h3><p class="role">Co-Founder · Scientific Principal</p><p>Associate Professor, Albert Einstein College of Medicine. PhD in physics; 25 years developing machine-learning methods and theory for high-dimensional signals. Continuously NIH-funded principal investigator (two NEI R01s and an NIDA RF1), with NSF support and an NVIDIA early-adopter award.</p></div>
+          <div><h3>Ruben Coen-Cagli, PhD</h3><p class="role">Co-Founder · Scientific Principal</p><p>Associate Professor, Albert Einstein College of Medicine. PhD in physics; 25 years developing machine-learning methods and theory for high-dimensional signals. Continuously NIH-funded principal investigator (two NEI R01s and an NIDA RF1), with NSF support and an NVIDIA early-adopter award.</p>
+          <a class="li" href="https://einsteinmed.edu/faculty/11126/ruben-coen-cagli" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg>Einstein profile</a></div>
         </div>
       </div>
     </div>
@@ -395,8 +407,7 @@
     // signature arterial trace - generated, not hand-authored
     var dim = document.getElementById('traceDim');
     var pulse = document.getElementById('tracePulse');
-    var dot = document.getElementById('sweepDot');
-    var halo = document.getElementById('sweepHalo');
+    var beatAt = 0;   // rising edge each time the sweep crosses an R wave
 
     if(dim && pulse){
       // Real ECG (lead II) morphology, synthesized as a sum of Gaussians for the
@@ -422,46 +433,172 @@
       var len = pulse.getTotalLength();
 
       if(reduce){
-        // static: full trace, no sweep
-        pulse.style.display = 'none';
-        if(dot) dot.style.display = 'none';
-        if(halo) halo.style.display = 'none';
+        pulse.style.display = 'none';   // static full trace, no sweep
       } else {
         // a bright segment travels the trace continuously, like a monitor sweep
         var seg = len * 0.16;
         pulse.style.strokeDasharray = seg + ' ' + (len - seg);
-        var PERIOD = 7000; // one pass = 8 beats, so ~69 bpm
-        var start = null;
+        var PERIOD = 7000;              // one pass = 8 beats, so ~69 bpm
+        var start = null, lastBeat = -1;
 
         function frame(ts){
           if(start === null) start = ts;
-          var t = ((ts - start) % PERIOD) / PERIOD;      // 0 -> 1
+          var t = ((ts - start) % PERIOD) / PERIOD;
           pulse.style.strokeDashoffset = String(-t * len);
 
-          // head of the bright segment, wrapped into [0, len]
-          var headLen = (t * len + seg) % len;
-          if(dot || halo){
-            var p = pulse.getPointAtLength(headLen);
-            if(dot){ dot.setAttribute('cx', p.x); dot.setAttribute('cy', p.y); }
-            if(halo){ halo.setAttribute('cx', p.x); halo.setAttribute('cy', p.y); }
-          }
+          // fire a beat event as the sweep head crosses each R wave, so the
+          // network downstream depolarises in time with the trace
+          var b = Math.floor(t * 8);
+          if(b !== lastBeat){ lastBeat = b; beatAt = ts; }
+
           requestAnimationFrame(frame);
         }
         requestAnimationFrame(frame);
       }
     }
 
-    // scroll-zoom monitor backdrop
+    // ---- neural substrate: a layered net that fires with the heartbeat ----
+    var cv = document.getElementById('net');
+    if(cv && !reduce && cv.getContext){
+      var ctx = cv.getContext('2d');
+      var nodes = [], edges = [], signals = [], accent = '#1B4D3E';
+      try{ accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || accent; }catch(e){}
+
+      function rgba(hex, a){
+        var h = hex.replace('#',''); if(h.length===3) h = h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+        var n = parseInt(h,16);
+        return 'rgba(' + ((n>>16)&255) + ',' + ((n>>8)&255) + ',' + (n&255) + ',' + a + ')';
+      }
+
+      function build(){
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var w = cv.clientWidth, h = cv.clientHeight;
+        if(!w || !h) return;
+        cv.width = Math.round(w*dpr); cv.height = Math.round(h*dpr);
+        ctx.setTransform(dpr,0,0,dpr,0,0);
+        nodes = []; edges = []; signals = [];
+        var per = [5,9,12,12,9,5], L = per.length;
+        for(var l=0;l<L;l++){
+          for(var i=0;i<per[l];i++){
+            var x = (l+0.5)/L*w, y = (i+0.5)/per[l]*h;
+            nodes.push({l:l, x:x, y:y, bx:x, by:y,
+                        ph:Math.random()*Math.PI*2,
+                        drift: 8 + Math.random()*14,
+                        r: 1.5 + Math.random()*1.6, lit:0});
+          }
+        }
+        for(var a=0;a<nodes.length;a++){
+          for(var b2=0;b2<nodes.length;b2++){
+            if(nodes[b2].l === nodes[a].l + 1 && Math.random() < 0.34){
+              edges.push({a:a, b:b2});
+            }
+          }
+        }
+      }
+
+      function emit(){
+        // depolarise a few input-layer nodes; each signal walks the graph
+        for(var k=0;k<5;k++){
+          var cands = [];
+          for(var e=0;e<edges.length;e++) if(nodes[edges[e].a].l === 0) cands.push(e);
+          if(!cands.length) return;
+          signals.push({e:cands[(Math.random()*cands.length)|0], t:0, sp:0.010 + Math.random()*0.012});
+        }
+      }
+
+      var lastSeen = -1, t0 = null;
+      function draw(ts){
+        if(t0 === null) t0 = ts;
+        var w = cv.clientWidth, h = cv.clientHeight;
+        ctx.clearRect(0,0,w,h);
+
+        if(beatAt !== lastSeen){ lastSeen = beatAt; emit(); }
+
+        // gentle drift keeps the substrate alive
+        for(var i=0;i<nodes.length;i++){
+          var n = nodes[i], tt = (ts - t0)/1000;
+          n.x = n.bx + Math.cos(tt*0.24 + n.ph) * n.drift;
+          n.y = n.by + Math.sin(tt*0.19 + n.ph*1.7) * n.drift * 0.7;
+          if(n.lit > 0) n.lit -= 0.016;
+        }
+
+        ctx.lineWidth = 1;
+        for(var e2=0;e2<edges.length;e2++){
+          var A = nodes[edges[e2].a], B = nodes[edges[e2].b];
+          ctx.strokeStyle = rgba(accent, 0.14);
+          ctx.beginPath(); ctx.moveTo(A.x,A.y); ctx.lineTo(B.x,B.y); ctx.stroke();
+        }
+
+        for(var s=signals.length-1; s>=0; s--){
+          var sg = signals[s], ed = edges[sg.e];
+          if(!ed){ signals.splice(s,1); continue; }
+          var P = nodes[ed.a], Q = nodes[ed.b];
+          sg.t += sg.sp;
+          if(sg.t >= 1){
+            Q.lit = 1;
+            var next = [];
+            for(var e3=0;e3<edges.length;e3++) if(edges[e3].a === ed.b) next.push(e3);
+            signals.splice(s,1);
+            if(next.length && Math.random() < 0.86){
+              var take = Math.random() < 0.34 ? 2 : 1;
+              for(var m=0;m<take && next.length;m++){
+                var pick = (Math.random()*next.length)|0;
+                signals.push({e:next[pick], t:0, sp:0.010 + Math.random()*0.012});
+                next.splice(pick,1);
+              }
+            }
+            continue;
+          }
+          var x = P.x + (Q.x-P.x)*sg.t, y = P.y + (Q.y-P.y)*sg.t;
+          var tail = Math.max(0, sg.t - 0.34);
+          ctx.strokeStyle = rgba(accent, 0.5);
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(P.x + (Q.x-P.x)*tail, P.y + (Q.y-P.y)*tail);
+          ctx.lineTo(x,y); ctx.stroke();
+          ctx.fillStyle = rgba(accent, 0.85);
+          ctx.beginPath(); ctx.arc(x,y,1.9,0,6.2832); ctx.fill();
+          ctx.lineWidth = 1;
+        }
+
+        for(var j=0;j<nodes.length;j++){
+          var nd = nodes[j];
+          var lit = Math.max(0, nd.lit);
+          ctx.fillStyle = rgba(accent, 0.26 + lit*0.62);
+          ctx.beginPath(); ctx.arc(nd.x, nd.y, nd.r + lit*2.2, 0, 6.2832); ctx.fill();
+          if(lit > 0.05){
+            ctx.fillStyle = rgba(accent, lit*0.13);
+            ctx.beginPath(); ctx.arc(nd.x, nd.y, nd.r + 9*lit, 0, 6.2832); ctx.fill();
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+
+      build();
+      requestAnimationFrame(draw);
+      var rt; window.addEventListener('resize', function(){
+        clearTimeout(rt); rt = setTimeout(build, 180);
+      }, {passive:true});
+    }
+
+    // scroll-zoom: the substrate pushes toward you as you descend
     var bg = document.getElementById('gridbg');
-    if(bg && !reduce){
+    var nw = document.getElementById('netwrap');
+    if((bg || nw) && !reduce){
       var ticking = false;
       function paint(){
         var h = window.innerHeight || 1;
         var y = window.pageYOffset || document.documentElement.scrollTop || 0;
-        var p = Math.min(y / (h * 1.6), 1);            // 0 at top -> 1 once well scrolled
-        var scale = 1 + p * 0.85;                       // zoom in as you descend
-        bg.style.transform = 'scale(' + scale.toFixed(4) + ')';
-        bg.style.opacity = (0.55 * (1 - p * 0.82)).toFixed(3);
+        var p = Math.min(y / (h * 1.7), 1);
+        if(bg){
+          bg.style.transform = 'scale(' + (1 + p*0.95).toFixed(4) + ')';
+          bg.style.opacity = (0.42 * (1 - p*0.85)).toFixed(3);
+        }
+        if(nw){
+          // the network zooms a little less, so the two layers separate in depth
+          nw.style.transform = 'scale(' + (1 + p*0.42).toFixed(4) + ')';
+          nw.style.opacity = (1 - p*0.55).toFixed(3);
+        }
         ticking = false;
       }
       window.addEventListener('scroll', function(){
@@ -469,8 +606,9 @@
       }, {passive:true});
       window.addEventListener('resize', paint, {passive:true});
       paint();
-    } else if(bg && reduce){
-      bg.style.opacity = '0.28';
+    } else {
+      if(bg) bg.style.opacity = '0.24';
+      if(nw) nw.style.opacity = '0.35';
     }
     // quiet scroll reveals
     var els = document.querySelectorAll('section .wrap > *');
