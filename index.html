@@ -63,12 +63,18 @@
   h3{font-size:22px; line-height:1.26}
   p{margin:0}
 
+  /* one alignment rule for the whole page: section intros centre, content stays left */
   .eyebrow{
     font-family:var(--mono); font-size:12px; font-weight:500; text-transform:uppercase;
-    letter-spacing:.16em; color:var(--muted); margin:0 0 22px;
-    display:flex; align-items:center; gap:12px;
+    letter-spacing:.18em; color:var(--accent); margin:0 0 20px; text-align:center;
   }
-  .eyebrow::before{content:""; width:22px; height:1px; background:var(--accent); display:inline-block}
+  section > .wrap > h2,
+  section > .wrap > .note,
+  section > .wrap > .lead{margin-left:auto; margin-right:auto; text-align:center}
+  section > .wrap > h2{max-width:26ch}
+  section > .wrap > .note{max-width:64ch; margin-bottom:14px}
+  .cap, .dl .row, .principle, .person, .ref, .prose{text-align:left}
+  .hero .wrap > *{text-align:center}
   .lead{font-size:clamp(19px,2.2vw,22px); line-height:1.5; color:var(--ink)}
   .mono{font-family:var(--mono); font-variant-numeric:tabular-nums}
   .muted{color:var(--muted)}
@@ -81,8 +87,8 @@
     position:sticky; top:0; z-index:50; background:color-mix(in srgb, var(--paper) 88%, transparent);
     backdrop-filter:saturate(115%) blur(6px); border-bottom:1px solid var(--rule);
   }
-  .mast .wrap{display:flex; align-items:center; justify-content:space-between; height:62px}
-  .brand{display:flex; align-items:center; gap:11px; font-family:var(--serif); font-size:21px; letter-spacing:.01em; color:var(--ink)}
+  .mast .wrap{display:flex; align-items:center; justify-content:space-between; height:74px}
+  .brand{display:flex; align-items:center; gap:13px; font-family:var(--serif); font-size:27px; letter-spacing:-.005em; color:var(--ink)}
   .brand svg{display:block; color:var(--accent)}
   nav.top{display:flex; gap:30px}
   nav.top a{font-family:var(--sans); font-size:14.5px; font-weight:500; color:var(--muted); position:relative; padding:4px 0}
@@ -200,6 +206,9 @@
   /* ---- living substrate: grid + neural network ---- */
   .bg-layer{position:fixed; inset:-8%; z-index:0; pointer-events:none;
             will-change:transform, opacity; transform-origin:50% 38%}
+  /* GRID LAYER: currently OFF, so the neural substrate carries the page alone.
+     To bring it back, change the display below from none to block. */
+  .grid-bg{display:none}
   .grid-bg{
     opacity:.30;
     background-image:
@@ -212,9 +221,9 @@
   }
   #net{width:100%; height:100%; display:block}
   .net-wrap{
-    opacity:.55;
-    -webkit-mask-image:radial-gradient(ellipse 70% 62% at 50% 46%, transparent 0%, transparent 42%, #000 96%);
-    mask-image:radial-gradient(ellipse 70% 62% at 50% 46%, transparent 0%, transparent 42%, #000 96%);
+    opacity:.78;
+    -webkit-mask-image:radial-gradient(ellipse 68% 60% at 50% 46%, transparent 0%, transparent 36%, #000 94%);
+    mask-image:radial-gradient(ellipse 68% 60% at 50% 46%, transparent 0%, transparent 36%, #000 94%);
   }
   header.mast, main, footer.colo, .ribbon{position:relative; z-index:1}
 
@@ -234,11 +243,22 @@
   .li:hover{color:var(--ink); border-color:var(--accent); background:var(--wash)}
   .li svg{display:block; color:var(--accent)}
 
-  /* ---- reveal ---- */
-  .rv{opacity:0; transform:translateY(12px); transition:opacity .5s ease, transform .5s ease}
+  /* ---- reveal: pieces arrive in sequence, not all at once ---- */
+  .rv{opacity:0; transform:translateY(14px);
+      transition:opacity .62s cubic-bezier(.22,.85,.3,1), transform .62s cubic-bezier(.22,.85,.3,1)}
   .rv.in{opacity:1; transform:none}
+
+  /* masthead settles once you leave the hero */
+  header.mast{transition:height .3s ease, box-shadow .3s ease, border-color .3s ease}
+  header.mast .wrap{transition:height .3s cubic-bezier(.22,.85,.3,1)}
+  header.mast.settled .wrap{height:60px}
+  header.mast.settled{box-shadow:0 1px 24px rgba(0,0,0,.16)}
+  header.mast .brand{transition:font-size .3s cubic-bezier(.22,.85,.3,1)}
+  header.mast.settled .brand{font-size:22px}
+
   @media (prefers-reduced-motion:reduce){
     .rv{opacity:1; transform:none; transition:none}
+    header.mast, header.mast .wrap, header.mast .brand{transition:none}
     *{scroll-behavior:auto !important}
   }
   html{scroll-behavior:smooth}
@@ -262,7 +282,7 @@
 <header class="mast">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Afferent home">
-      <svg width="34" height="16" viewBox="0 0 88 32" aria-hidden="true">
+      <svg width="42" height="20" viewBox="0 0 88 32" aria-hidden="true">
         <path d="M0,16 L18,16 L24,4 L30,25 L35,11 L41,16 L88,16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
       </svg>
       <em>Afferent Health</em>
@@ -729,15 +749,46 @@
       if(bg) bg.style.opacity = '0.24';
       if(nw) nw.style.opacity = '0.35';
     }
-    // quiet scroll reveals
-    var els = document.querySelectorAll('section .wrap > *');
-    var reduce2 = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if('IntersectionObserver' in window && !reduce2){
-      document.querySelectorAll('section').forEach(function(s){ s.classList.add('rv'); });
+    // staggered reveals: heading first, then each card in sequence
+    if('IntersectionObserver' in window && !reduce){
+      var groups = [];
+      Array.prototype.forEach.call(document.querySelectorAll('section'), function(s){
+        var kids = s.querySelectorAll('.wrap > .eyebrow, .wrap > h2, .wrap > .note, .cap, .dl .row, .principle, .person');
+        var list = kids.length ? Array.prototype.slice.call(kids) : Array.prototype.slice.call(s.querySelectorAll('.wrap > *'));
+        list.forEach(function(el){ el.classList.add('rv'); });
+        if(list.length) groups.push({sec:s, list:list});
+      });
       var io = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
-      }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
-      document.querySelectorAll('section').forEach(function(s){ io.observe(s); });
+        entries.forEach(function(e){
+          if(!e.isIntersecting) return;
+          io.unobserve(e.target);
+          for(var g=0; g<groups.length; g++){
+            if(groups[g].sec === e.target){
+              groups[g].list.forEach(function(el, i){
+                el.style.transitionDelay = Math.min(i*55, 420) + 'ms';
+                el.classList.add('in');
+              });
+              break;
+            }
+          }
+        });
+      }, {threshold:.08, rootMargin:'0px 0px -6% 0px'});
+      groups.forEach(function(g){ io.observe(g.sec); });
+    }
+
+    // masthead settles after the hero
+    var mast = document.querySelector('header.mast');
+    if(mast){
+      var mTick = false;
+      function mPaint(){
+        var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+        mast.classList.toggle('settled', y > 120);
+        mTick = false;
+      }
+      window.addEventListener('scroll', function(){
+        if(!mTick){ mTick = true; requestAnimationFrame(mPaint); }
+      }, {passive:true});
+      mPaint();
     }
   })();
 </script>
