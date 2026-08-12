@@ -312,6 +312,24 @@
   .contact .eyebrow a:hover{border-bottom-color:var(--accent)}
   .contact-block .c-city{font-family:var(--serif); font-size:clamp(16px,1.6vw,19px); color:var(--muted)}
 
+  /* ---- mobile refinements (desktop untouched above 720px) ---- */
+  @media (max-width:720px){
+    main{padding-top:clamp(30px,6vh,48px)}
+    .wave svg{height:min(22vh,180px)}          /* trace scaled to the smaller headline */
+    #traceDim{opacity:.13}
+    .net-wrap{opacity:.5}                       /* calmer substrate at phone density */
+    .define{font-size:15px; line-height:1.55; margin-top:16px; padding:0 6px}
+    .hero .mission{font-size:17.5px; line-height:1.55; margin-top:30px; padding:0 4px}
+    .hero{padding:10px 0 8px}
+    .principals{padding-top:20px}
+    .principals .eyebrow, .contact .eyebrow{font-size:13.5px; margin-bottom:14px}
+    .p-list{gap:20px}
+    .p-item h3{font-size:20px}
+    .p-item .role{font-size:10.5px; margin-top:5px}
+    .contact{padding:24px 0 max(16px, env(safe-area-inset-bottom))}
+    .contact .eyebrow{margin-bottom:8px}
+    .contact-block .c-city{font-size:15px}
+  }
 </style>
 
 </head>
