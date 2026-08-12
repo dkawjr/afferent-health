@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -20,9 +20,6 @@
 <meta name="theme-color" content="#12140F">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
   :root{
@@ -313,21 +310,10 @@
   .contact .eyebrow{font-size:10.5px; margin-bottom:12px}
   .contact-block .c-city{font-family:var(--serif); font-size:clamp(16px,1.6vw,19px); color:var(--muted)}
 
-  /* ---- signature hero (EXPERIMENT) ----
-     "Afferent Health" is drawn in a cursive script whose baseline rides the
-     ECG trace, so the signature reads as part of the signal.
-     TO REVERT: change <body data-hero="signature"> to <body data-hero="serif">
-     in the markup below - nothing else needs to change. */
-  body[data-hero="signature"] .hero h1{
-    font-family:'Great Vibes', cursive; font-weight:400;
-    font-size:clamp(66px,10.5vw,142px); line-height:1.05; letter-spacing:.01em}
-  body[data-hero="signature"] .wave{top:56%}
-  body[data-hero="signature"] #traceDim{opacity:.24}
-  body[data-hero="signature"] #tracePulse{opacity:.6}
 </style>
 
 </head>
-<body data-hero="signature">
+<body>
 <div class="bg-layer grid-bg" id="gridbg" aria-hidden="true"></div>
 <div class="bg-layer net-wrap" id="netwrap" aria-hidden="true"><canvas id="net"></canvas></div>
 
