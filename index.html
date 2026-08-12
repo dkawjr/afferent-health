@@ -289,25 +289,25 @@
   html{scroll-behavior:smooth}
 
   /* ---- minimal landing ---- */
-  .hero{min-height:0; padding:clamp(56px,9vh,96px) 0 clamp(28px,4vh,44px)}
-  .define{margin:22px auto 0; max-width:52ch}
-  .define .word{font-family:var(--serif); font-style:italic; font-size:clamp(24px,2.5vw,29px); line-height:1.15; color:var(--ink)}
-  .define .phon{font-family:var(--mono); font-size:12.5px; letter-spacing:.07em; color:var(--faint); margin-top:5px}
-  .define .gloss{font-family:var(--serif); font-style:italic; font-size:clamp(18px,1.9vw,22px); line-height:1.4; color:var(--muted); margin-top:8px}
-  .hero .lead{margin:30px auto 0; font-family:var(--serif); font-size:clamp(20px,2.2vw,25px); line-height:1.45; max-width:52ch}
-  .hero .tag{margin-top:18px}
-  .principals{padding:clamp(28px,4vw,44px) 0 clamp(24px,3.5vw,40px)}
-  .p-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:8px}
-  .p-min{background:var(--paper); padding:40px 30px 44px; text-align:center; transition:background .28s ease}
-  .p-min:hover{background:var(--wash)}
-  .p-min .mono-mark{margin:0 auto 20px}
-  .p-min h3 a{color:var(--ink); border-bottom:1px solid transparent; transition:color .16s ease, border-color .16s ease}
-  .p-min h3 a:hover{color:var(--accent); border-bottom-color:var(--accent)}
-  .p-min .role{font-family:var(--mono); font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-top:10px}
-  @media (max-width:860px){ .p-grid{grid-template-columns:1fr} }
+  main{min-height:100svh; display:flex; flex-direction:column; justify-content:center}
+  @media (max-width:720px){ main{justify-content:flex-start; padding-top:48px} }
+  .hero{min-height:0; padding:clamp(18px,3vh,34px) 0 clamp(14px,2vh,24px)}
+  .define{font-family:var(--serif); font-style:italic; font-size:clamp(16px,1.6vw,19px);
+          line-height:1.5; color:var(--muted); margin:20px auto 0; max-width:76ch}
+  .hero .mission{font-family:var(--serif); font-size:clamp(20px,2.1vw,25px); line-height:1.45; color:var(--ink);
+                 letter-spacing:-.008em; max-width:56ch; margin:clamp(38px,5.5vh,56px) auto 0}
+  .principals{padding:clamp(22px,3.5vh,36px) 0 0}
+  .p-list{display:flex; justify-content:center; align-items:flex-start; flex-wrap:wrap;
+          gap:clamp(28px,5vw,84px); margin-top:6px}
+  .p-item{text-align:center}
+  .p-item h3{font-size:clamp(21px,2vw,24px)}
+  .p-item h3 a{color:var(--ink); border-bottom:1px solid transparent; transition:color .16s ease, border-color .16s ease}
+  .p-item h3 a:hover{color:var(--accent); border-bottom-color:var(--accent)}
+  .p-item .role{font-family:var(--mono); font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-top:8px}
+  .contact{padding:clamp(26px,4vh,40px) 0 clamp(10px,2vh,20px)}
   .contact-block{text-align:center}
-  .contact-block .c-city{font-family:var(--serif); font-size:clamp(20px,2.2vw,25px); color:var(--ink)}
-  .contact-block .c-mail{font-family:var(--mono); font-size:14px; letter-spacing:.04em; margin-top:12px}
+  .contact-block .c-city{font-family:var(--serif); font-size:clamp(19px,2vw,23px); color:var(--ink)}
+  .contact-block .c-mail{font-family:var(--mono); font-size:14px; letter-spacing:.04em; margin-top:10px}
 </style>
 
 </head>
@@ -328,32 +328,24 @@
         </div>
         <h1>Afferent Health</h1>
       </div>
-      <div class="define">
-        <p class="word">afferent</p>
-        <p class="phon">/ˈafərənt/</p>
-        <p class="gloss">adj. conducting signals toward a central structure.</p>
-      </div>
+      <p class="define">afferent - /ˈafərənt/ - adj. conducting signals toward a central structure.</p>
       <p class="mission">We turn complex clinical data into actionable intelligence, from advanced model research and development to deployable systems for monitoring, prediction, and decision support.</p>
-      <p class="tag">Clinical AI &middot; Multimodal Analytics &middot; Physiologic Signal Intelligence &middot; Decision Support</p>
     </div>
   </section>
 
   <section class="principals" id="principals">
     <div class="wrap">
       <p class="eyebrow">Principals</p>
-      <div class="p-grid">
-        <div class="p-min">
-          <div class="mono-mark" aria-hidden="true">AW</div>
+      <div class="p-list">
+        <div class="p-item">
           <h3><a href="https://www.linkedin.com/in/dkawjr/" target="_blank" rel="noopener">D. K. Adrian Williams, MSc</a></h3>
           <p class="role">Founder &amp; Managing Principal</p>
         </div>
-        <div class="p-min">
-          <div class="mono-mark" aria-hidden="true">JS</div>
+        <div class="p-item">
           <h3><a href="https://weillcornell.org/joseph-scarpa-md-phd" target="_blank" rel="noopener">Joseph Scarpa, MD, PhD</a></h3>
           <p class="role">Principal Medical Advisor</p>
         </div>
-        <div class="p-min">
-          <div class="mono-mark" aria-hidden="true">RC</div>
+        <div class="p-item">
           <h3><a href="https://einsteinmed.edu/faculty/11126/ruben-coen-cagli" target="_blank" rel="noopener">Ruben Coen-Cagli, PhD</a></h3>
           <p class="role">Principal Scientific Advisor</p>
         </div>
