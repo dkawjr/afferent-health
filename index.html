@@ -289,13 +289,14 @@
   html{scroll-behavior:smooth}
 
   /* ---- minimal landing ---- */
-  .hero{min-height:86svh; padding:clamp(84px,12vh,132px) 0 clamp(56px,8vh,92px)}
-  .define{margin:36px auto 0; max-width:52ch}
-  .define .word{font-family:var(--serif); font-style:italic; font-size:clamp(25px,2.7vw,31px); line-height:1.15; color:var(--ink)}
-  .define .phon{font-family:var(--mono); font-size:13px; letter-spacing:.07em; color:var(--faint); margin-top:6px}
-  .define .gloss{font-family:var(--serif); font-size:clamp(19px,2vw,24px); line-height:1.4; color:var(--muted); margin-top:12px}
-  .hero .lead{margin:48px auto 0; font-size:clamp(21px,2.4vw,26px); max-width:30ch}
-  .principals{padding-top:clamp(40px,5vw,64px)}
+  .hero{min-height:0; padding:clamp(56px,9vh,96px) 0 clamp(28px,4vh,44px)}
+  .define{margin:22px auto 0; max-width:52ch}
+  .define .word{font-family:var(--serif); font-style:italic; font-size:clamp(24px,2.5vw,29px); line-height:1.15; color:var(--ink)}
+  .define .phon{font-family:var(--mono); font-size:12.5px; letter-spacing:.07em; color:var(--faint); margin-top:5px}
+  .define .gloss{font-family:var(--serif); font-style:italic; font-size:clamp(18px,1.9vw,22px); line-height:1.4; color:var(--muted); margin-top:8px}
+  .hero .lead{margin:30px auto 0; font-family:var(--serif); font-size:clamp(20px,2.2vw,25px); line-height:1.45; max-width:52ch}
+  .hero .tag{margin-top:18px}
+  .principals{padding:clamp(28px,4vw,44px) 0 clamp(24px,3.5vw,40px)}
   .p-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:8px}
   .p-min{background:var(--paper); padding:40px 30px 44px; text-align:center; transition:background .28s ease}
   .p-min:hover{background:var(--wash)}
@@ -332,8 +333,7 @@
         <p class="phon">/ˈafərənt/</p>
         <p class="gloss">adj. conducting signals toward a central structure.</p>
       </div>
-      <p class="lead">Clinical intelligence from complex data.</p>
-      <p class="sub">We develop and translate machine-learning systems for multimodal clinical data, physiologic monitoring, and healthcare decision support.</p>
+      <p class="mission">We turn complex clinical data into actionable intelligence, from advanced model research and development to deployable systems for monitoring, prediction, and decision support.</p>
       <p class="tag">Clinical AI &middot; Multimodal Analytics &middot; Physiologic Signal Intelligence &middot; Decision Support</p>
     </div>
   </section>
@@ -361,7 +361,7 @@
     </div>
   </section>
 
-  <section class="contact" id="contact" style="padding-top:0">
+  <section class="contact" id="contact">
     <div class="wrap contact-block">
       <p class="eyebrow">Contact</p>
       <p class="c-city">New York, NY</p>
@@ -370,20 +370,6 @@
   </section>
 
 </main>
-
-<footer class="colo">
-  <div class="wrap">
-    <div class="grid">
-      <div>
-        <div class="brand"><svg width="30" height="14" viewBox="0 0 88 32" aria-hidden="true"><path d="M0,16 L18,16 L24,4 L30,25 L35,11 L41,16 L88,16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg><em>Afferent Health</em></div>
-        <div class="fine">Clinical AI · Healthcare Intelligence</div>
-      </div>
-      <div class="contact">
-        New York, NY
-      </div>
-    </div>
-  </div>
-</footer>
 
 <script>
   (function(){
