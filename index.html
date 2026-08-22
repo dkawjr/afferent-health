@@ -50,7 +50,7 @@
   }
 
   *{box-sizing:border-box}
-  html{-webkit-text-size-adjust:100%}
+  html{-webkit-text-size-adjust:100%; overflow-x:clip}
   body{
     margin:0; background:var(--paper); color:var(--ink);
     font-family:var(--sans); font-size:19.5px; line-height:1.6;
@@ -337,26 +337,30 @@
 
   /* ---- mobile refinements (desktop untouched above 720px) ---- */
   @media (max-width:720px){
+    html, body{width:100%; max-width:100%; overflow-x:clip}
+    .wrap{width:100%; max-width:100%; padding-left:18px; padding-right:18px}
     .hero{min-height:72svh; padding:clamp(54px,8vh,78px) 0 clamp(38px,6vh,58px)}
     .wave svg{height:min(22vh,180px)}          /* trace scaled to the smaller headline */
     #traceDim{opacity:.13}
     .net-wrap{opacity:.5}                       /* calmer substrate at phone density */
-    .define{font-size:15px; line-height:1.55; margin-top:16px; padding:0 6px}
-    .hero .mission{font-size:17.5px; line-height:1.55; margin-top:30px; padding:0 4px}
+    .define{font-size:15px; line-height:1.55; margin-top:16px; padding:0 6px; max-width:100%; overflow-wrap:anywhere}
+    .hero .mission{font-size:17.5px; line-height:1.55; margin-top:30px; padding:0 4px; max-width:100%; overflow-wrap:anywhere}
     .hero{padding:10px 0 8px}
     .principals{padding:34px 0}
     .principals .eyebrow, .contact .eyebrow{font-size:13.5px; margin-bottom:14px}
-    .p-list{gap:20px}
-    .p-item h3{font-size:20px}
-    .p-item .role{font-size:10.5px; margin-top:5px}
+    .p-list{width:100%; min-width:0; gap:20px}
+    .p-item{width:100%; min-width:0; max-width:100%}
+    .p-item h3{font-size:20px; max-width:100%; overflow-wrap:anywhere}
+    .p-item .role{font-size:10.5px; margin-top:5px; max-width:100%; overflow-wrap:anywhere}
     .contact{padding:24px 0 max(16px, env(safe-area-inset-bottom))}
     .contact .eyebrow{margin-bottom:8px}
     .contact-block .c-city{font-size:15px}
     .partners{padding:44px 0}
-    .partner-grid{grid-template-columns:1fr 1fr; gap:10px; margin-top:26px}
-    .partner-card{min-height:116px; padding:16px}
+    .partner-grid{width:100%; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:26px}
+    .partner-card{min-width:0; width:100%; min-height:116px; padding:16px; overflow:hidden}
     .partner-card img{max-height:72px}
     .partner-card.ezlabs img{max-height:86px}
+    .capability-link{max-width:100%; justify-content:center; text-align:center}
     .naics-list{display:grid; gap:7px; padding:0 10px; font-size:10.5px}
   }
 </style>
@@ -445,7 +449,7 @@
     <p class="naics-label">SAM.gov NAICS</p>
     <div class="naics-list">
       <span><strong>541690</strong> Other Scientific and Technical Consulting Services</span>
-      <span><strong>541715</strong> Research and Development in the Physical, Engineering, and Life Sciences</span>
+      <span><strong>541715</strong> Research and Development in the Physical, Engineering, and Life Sciences (except Nanotechnology and Biotechnology)</span>
       <span><strong>541512</strong> Computer Systems Design Services</span>
     </div>
     <p class="footer-fine">Afferent Health LLC · New York, NY · afferenthealth.com</p>
