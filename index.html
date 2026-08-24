@@ -303,9 +303,15 @@
   .p-item h3{font-size:clamp(21px,2vw,24px)}
   .p-item h3 a{color:var(--ink); border-bottom:1px solid transparent; transition:color .16s ease, border-color .16s ease}
   .p-item h3 a:hover{color:var(--accent); border-bottom-color:var(--accent)}
+  .p-item .credential{font-family:var(--mono); font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin-top:8px; text-align:center}
   .p-item .role{font-family:var(--mono); font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-top:8px; text-align:center}
+  .p-item .credential + .role{margin-top:4px}
   .principals .eyebrow{font-size:15.5px}
   .partners{padding:clamp(54px,7vw,88px) 0; border-top:1px solid var(--rule)}
+  .capabilities > .wrap > h2,
+  .partners > .wrap > h2{max-width:1080px}
+  .capabilities > .wrap > .note,
+  .partners > .wrap > .note{max-width:980px}
   .partners .note{margin-top:14px}
   .partner-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:34px}
   .partner-card{min-height:154px; display:flex; align-items:center; justify-content:center; padding:24px;
@@ -394,6 +400,7 @@
       <div class="p-list">
         <div class="p-item">
           <h3><a href="https://www.linkedin.com/in/dkawjr/" target="_blank" rel="noopener">D. K. Adrian Williams, MSc</a></h3>
+          <p class="credential">MD-PhD Candidate</p>
           <p class="role">Founder &amp; Managing Principal</p>
         </div>
         <div class="p-item">
