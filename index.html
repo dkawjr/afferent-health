@@ -290,13 +290,13 @@
 
   /* ---- minimal landing ---- */
   main{min-height:100svh; display:block}
-  .hero{min-height:min(78svh,820px); display:flex; align-items:center; padding:clamp(74px,10vh,118px) 0 clamp(54px,8vh,92px)}
+  .hero{min-height:min(66svh,700px); display:flex; align-items:center; padding:clamp(56px,7vh,84px) 0 clamp(26px,4vh,44px)}
   .define{font-family:var(--serif); font-style:italic; font-size:clamp(16px,1.6vw,19px);
           line-height:1.5; color:var(--muted); margin:20px auto 0; max-width:76ch}
   .hero .mission{font-family:var(--serif); font-size:clamp(20px,2.1vw,25px); line-height:1.45; color:var(--ink);
                  letter-spacing:-.008em; max-width:56ch; margin:clamp(38px,5.5vh,56px) auto 0}
   .hero .mission span{display:block}
-  .principals{padding:clamp(34px,5vh,56px) 0}
+  .principals{padding:clamp(26px,4vh,44px) 0}
   .p-list{display:flex; justify-content:center; align-items:flex-start; flex-wrap:wrap;
           gap:clamp(28px,5vw,84px); margin-top:6px}
   .p-item{text-align:center}
@@ -307,7 +307,7 @@
   .p-item .role{font-family:var(--mono); font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-top:8px; text-align:center}
   .p-item .credential + .role{margin-top:4px}
   .principals .eyebrow{font-size:15.5px}
-  .partners{padding:clamp(54px,7vw,88px) 0; border-top:1px solid var(--rule)}
+  .partners{padding:clamp(54px,7vw,88px) 0 clamp(28px,4vw,44px); border-top:1px solid var(--rule)}
   .capabilities > .wrap > h2,
   .partners > .wrap > h2{max-width:1080px}
   .capabilities > .wrap > .note,
@@ -326,11 +326,11 @@
                    font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink);
                    background:var(--paper); transition:background .18s ease, color .18s ease}
   .capability-link:hover{background:var(--accent); color:var(--paper)}
-  .contact{padding:clamp(38px,5vh,60px) 0}
-  .contact-block{text-align:center; opacity:.72}
+  .contact{padding:clamp(18px,2.5vh,28px) 0 clamp(28px,4vh,42px)}
+  .contact-block{text-align:center}
   .contact .eyebrow{font-size:15.5px; margin-bottom:12px}
-  .contact .eyebrow a{color:inherit; border-bottom:1px solid transparent; transition:border-color .16s ease}
-  .contact .eyebrow a:hover{border-bottom-color:var(--accent)}
+  .contact .eyebrow a{display:inline-flex; align-items:center; justify-content:center; padding:14px 20px; border:1px solid var(--accent); color:var(--paper); background:var(--accent); transition:background .16s ease, color .16s ease, transform .16s ease}
+  .contact .eyebrow a:hover{background:var(--paper); color:var(--accent); transform:translateY(-2px)}
   .contact-block .c-city{font-family:var(--serif); font-size:clamp(16px,1.6vw,19px); color:var(--muted)}
   .site-footer{position:relative; z-index:1; border-top:1px solid var(--rule); padding:28px 0 32px; background:var(--surface)}
   .naics-label{font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); text-align:center}
@@ -345,23 +345,22 @@
   @media (max-width:720px){
     html, body{width:100%; max-width:100%; overflow-x:clip}
     .wrap{width:100%; max-width:100%; padding-left:18px; padding-right:18px}
-    .hero{min-height:72svh; padding:clamp(54px,8vh,78px) 0 clamp(38px,6vh,58px)}
+    .hero{min-height:auto; padding:44px 0 28px}
     .wave svg{height:min(22vh,180px)}          /* trace scaled to the smaller headline */
     #traceDim{opacity:.13}
     .net-wrap{opacity:.5}                       /* calmer substrate at phone density */
     .define{font-size:15px; line-height:1.55; margin-top:16px; padding:0 6px; max-width:100%; overflow-wrap:anywhere}
     .hero .mission{font-size:17.5px; line-height:1.55; margin-top:30px; padding:0 4px; max-width:100%; overflow-wrap:anywhere}
-    .hero{padding:10px 0 8px}
-    .principals{padding:34px 0}
+    .principals{padding:26px 0 32px}
     .principals .eyebrow, .contact .eyebrow{font-size:13.5px; margin-bottom:14px}
     .p-list{width:100%; min-width:0; gap:20px}
     .p-item{width:100%; min-width:0; max-width:100%}
     .p-item h3{font-size:20px; max-width:100%; overflow-wrap:anywhere}
     .p-item .role{font-size:10.5px; margin-top:5px; max-width:100%; overflow-wrap:anywhere}
-    .contact{padding:24px 0 max(16px, env(safe-area-inset-bottom))}
+    .contact{padding:16px 0 max(20px, env(safe-area-inset-bottom))}
     .contact .eyebrow{margin-bottom:8px}
     .contact-block .c-city{font-size:15px}
-    .partners{padding:44px 0}
+    .partners{padding:44px 0 24px}
     .partner-grid{width:100%; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:26px}
     .partner-card{min-width:0; width:100%; min-height:116px; padding:16px; overflow:hidden}
     .partner-card img{max-height:72px}
