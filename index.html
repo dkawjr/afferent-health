@@ -142,7 +142,7 @@
   .abstract .lead{max-width:58ch}
 
   /* ---- capabilities: cards as nodes in a wired fabric ---- */
-  .capabilities{position:relative}
+  .capabilities{position:relative; padding:clamp(54px,7vw,88px) 0; border-top:1px solid var(--rule)}
   #capnet{position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:0}
   .cap-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:8px; position:relative; z-index:1}
   .cap{background:var(--paper); border:1px solid var(--rule); padding:32px 28px 36px; position:relative;
@@ -404,6 +404,32 @@
           <h3><a href="https://einsteinmed.edu/faculty/11126/ruben-coen-cagli" target="_blank" rel="noopener">Ruben Coen-Cagli, PhD</a></h3>
           <p class="role">Scientific/AI Consultant</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="capabilities" id="capabilities">
+    <canvas id="capnet" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <p class="eyebrow">Capabilities</p>
+      <h2>From complex clinical data to evidence, validation, and usable decision support.</h2>
+      <p class="note">Afferent provides the clinical and scientific workstream needed to define the problem, build the solution, and prove it works in practice.</p>
+      <div class="cap-grid">
+        <article class="cap">
+          <p class="ch">Clinical data</p>
+          <h3>Complete-record intelligence</h3>
+          <p>We link and analyze waveforms, monitor data, laboratory results, health records, and clinical text to measure the problem and find actionable signal.</p>
+        </article>
+        <article class="cap">
+          <p class="ch">Clinical AI</p>
+          <h3>Physiological models and decision support</h3>
+          <p>We build models from raw physiological signals and the clinical record, then translate them into monitoring, prediction, and decision-support tools.</p>
+        </article>
+        <article class="cap">
+          <p class="ch">Validation and delivery</p>
+          <h3>Evidence that holds up in practice</h3>
+          <p>We test performance, safety, bias, and reliability across patients and sites. For prime-led federal teams, we define the clinical workflow, validation plan, acceptance measures, and specialist support needed to deliver.</p>
+        </article>
       </div>
     </div>
   </section>
