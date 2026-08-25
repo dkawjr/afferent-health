@@ -301,11 +301,15 @@
           gap:clamp(28px,5vw,84px); margin-top:6px}
   .p-item{text-align:center; flex:1 1 280px; max-width:380px}
   .p-item h3{font-size:clamp(21px,2vw,24px)}
+  .p-item h3.profile-name{font-weight:600}
   .p-item h3 a{color:var(--ink); border-bottom:1px solid transparent; transition:color .16s ease, border-color .16s ease}
   .p-item h3 a:hover{color:var(--accent); border-bottom-color:var(--accent)}
   .p-item .credential{font-family:var(--mono); font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin-top:8px; text-align:center}
   .p-item .role{font-family:var(--mono); font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-top:8px; text-align:center}
   .p-item .profile-detail{font-family:var(--serif); font-size:14px; line-height:1.45; color:var(--muted); max-width:38ch; margin:8px auto 0; text-align:center}
+  .p-item .profile-lines{font-family:var(--serif); font-size:14px; line-height:1.38; color:var(--muted); max-width:40ch; margin:9px auto 0; display:flex; flex-direction:column; gap:2px; text-align:center}
+  .p-item .profile-lines p{margin:0}
+  .p-item .profile-lines .profile-specialty{color:var(--ink); margin-top:4px}
   .p-item .credential + .role{margin-top:4px}
   .p-item .credential + .profile-detail{margin-top:5px}
   .p-item .profile-detail + .role{margin-top:6px}
@@ -360,6 +364,7 @@
     .p-item{width:100%; min-width:0; max-width:100%}
     .p-item h3{font-size:20px; max-width:100%; overflow-wrap:anywhere}
     .p-item .profile-detail{font-size:13.5px; line-height:1.5; max-width:38ch; overflow-wrap:anywhere}
+    .p-item .profile-lines{font-size:13.5px; line-height:1.45; max-width:100%; gap:2px; overflow-wrap:anywhere}
     .p-item .role{font-size:10.5px; margin-top:5px; max-width:100%; overflow-wrap:anywhere}
     .contact{padding:16px 0 max(20px, env(safe-area-inset-bottom))}
     .contact .eyebrow{margin-bottom:8px}
@@ -408,14 +413,22 @@
           <p class="role">Founder &amp; Managing Principal</p>
         </div>
         <div class="p-item">
-          <h3><a href="https://weillcornell.org/joseph-scarpa-md-phd" target="_blank" rel="noopener">Joseph R. Scarpa, MD-PhD</a></h3>
-          <p class="profile-detail">Assistant Professor of Anesthesiology &middot; NIA-funded Principal Investigator</p>
-          <p class="role">Medical Consultant</p>
+          <h3 class="profile-name"><a href="https://weillcornell.org/joseph-scarpa-md-phd" target="_blank" rel="noopener">Joseph Scarpa, MD, PhD</a></h3>
+          <div class="profile-lines">
+            <p>Assistant Professor of Anesthesiology &amp; Liver Transplant Anesthesiologist</p>
+            <p>Computational Biologist &amp; Multi-omics Scientist</p>
+            <p>NIA-Funded Principal Investigator</p>
+            <p class="profile-specialty"><strong>Clinical &amp; Translational AI Specialist</strong></p>
+          </div>
         </div>
         <div class="p-item">
-          <h3><a href="https://einsteinmed.edu/faculty/11126/ruben-coen-cagli" target="_blank" rel="noopener">Ruben Coen-Cagli, PhD</a></h3>
-          <p class="profile-detail">Physicist and Associate Professor of Systems and Computational Biology, Neuroscience, and Ophthalmology &middot; NIH/NEI-funded Principal Investigator</p>
-          <p class="role">Scientific/AI Consultant</p>
+          <h3 class="profile-name"><a href="https://einsteinmed.edu/faculty/11126/ruben-coen-cagli" target="_blank" rel="noopener">Ruben Coen-Cagli, PhD</a></h3>
+          <div class="profile-lines">
+            <p>Associate Professor of Systems &amp; Computational Biology, Neuroscience, &amp; Ophthalmology</p>
+            <p>Physicist &amp; Computational Neuroscientist</p>
+            <p>NIH/NEI-Funded Principal Investigator</p>
+            <p class="profile-specialty"><strong>Scientific &amp; AI Specialist</strong></p>
+          </div>
         </div>
       </div>
     </div>
