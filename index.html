@@ -299,13 +299,16 @@
   .principals{padding:clamp(26px,4vh,44px) 0}
   .p-list{display:flex; justify-content:center; align-items:flex-start; flex-wrap:wrap;
           gap:clamp(28px,5vw,84px); margin-top:6px}
-  .p-item{text-align:center}
+  .p-item{text-align:center; flex:1 1 280px; max-width:380px}
   .p-item h3{font-size:clamp(21px,2vw,24px)}
   .p-item h3 a{color:var(--ink); border-bottom:1px solid transparent; transition:color .16s ease, border-color .16s ease}
   .p-item h3 a:hover{color:var(--accent); border-bottom-color:var(--accent)}
   .p-item .credential{font-family:var(--mono); font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin-top:8px; text-align:center}
   .p-item .role{font-family:var(--mono); font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-top:8px; text-align:center}
+  .p-item .profile-detail{font-family:var(--serif); font-size:14px; line-height:1.45; color:var(--muted); max-width:38ch; margin:8px auto 0; text-align:center}
   .p-item .credential + .role{margin-top:4px}
+  .p-item .credential + .profile-detail{margin-top:5px}
+  .p-item .profile-detail + .role{margin-top:6px}
   .principals .eyebrow{font-size:15.5px}
   .partners{padding:clamp(54px,7vw,88px) 0 clamp(28px,4vw,44px); border-top:1px solid var(--rule)}
   .capabilities > .wrap > h2,
@@ -356,6 +359,7 @@
     .p-list{width:100%; min-width:0; gap:20px}
     .p-item{width:100%; min-width:0; max-width:100%}
     .p-item h3{font-size:20px; max-width:100%; overflow-wrap:anywhere}
+    .p-item .profile-detail{font-size:13.5px; line-height:1.5; max-width:38ch; overflow-wrap:anywhere}
     .p-item .role{font-size:10.5px; margin-top:5px; max-width:100%; overflow-wrap:anywhere}
     .contact{padding:16px 0 max(20px, env(safe-area-inset-bottom))}
     .contact .eyebrow{margin-bottom:8px}
@@ -400,14 +404,17 @@
         <div class="p-item">
           <h3><a href="https://www.linkedin.com/in/dkawjr/" target="_blank" rel="noopener">D. K. Adrian Williams, MSc</a></h3>
           <p class="credential">MD-PhD Candidate</p>
+          <p class="profile-detail">Computational Neuroscientist</p>
           <p class="role">Founder &amp; Managing Principal</p>
         </div>
         <div class="p-item">
           <h3><a href="https://weillcornell.org/joseph-scarpa-md-phd" target="_blank" rel="noopener">Joseph R. Scarpa, MD-PhD</a></h3>
+          <p class="profile-detail">Assistant Professor of Anesthesiology &middot; NIA-funded Principal Investigator</p>
           <p class="role">Medical Consultant</p>
         </div>
         <div class="p-item">
           <h3><a href="https://einsteinmed.edu/faculty/11126/ruben-coen-cagli" target="_blank" rel="noopener">Ruben Coen-Cagli, PhD</a></h3>
+          <p class="profile-detail">Physicist and Associate Professor of Systems and Computational Biology, Neuroscience, and Ophthalmology &middot; NIH/NEI-funded Principal Investigator</p>
           <p class="role">Scientific/AI Consultant</p>
         </div>
       </div>
