@@ -320,7 +320,7 @@
   .capabilities > .wrap > .note,
   .partners > .wrap > .note{max-width:980px}
   .partners .note{margin-top:14px}
-  .partner-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:34px}
+  .partner-grid{display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:14px; margin-top:34px}
   .partner-card{min-height:154px; display:flex; align-items:center; justify-content:center; padding:24px;
                 border:1px solid var(--rule); background:#fff; transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease}
   .partner-card:hover{transform:translateY(-3px); border-color:var(--accent); box-shadow:0 12px 30px rgba(17,34,27,.08)}
@@ -328,6 +328,8 @@
   .partner-card.vetsez{background:#fff}
   .partner-card.ezlabs{background:#fff}
   .partner-card.ezlabs img{max-height:112px}
+  .partner-card.lelantos{background:#000}
+  .partner-card.lelantos img{max-height:112px}
   .capability-cta{display:flex; justify-content:center; margin-top:28px}
   .capability-link{display:inline-flex; align-items:center; gap:9px; border:1px solid var(--accent); padding:11px 16px;
                    font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink);
@@ -374,6 +376,7 @@
     .partner-card{min-width:0; width:100%; min-height:116px; padding:16px; overflow:hidden}
     .partner-card img{max-height:72px}
     .partner-card.ezlabs img{max-height:86px}
+    .partner-card.lelantos img{max-height:86px}
     .capability-link{max-width:100%; justify-content:center; text-align:center}
     .naics-list{display:grid; gap:7px; padding:0 10px; font-size:10.5px}
   }
@@ -481,6 +484,9 @@
         </a>
         <a class="partner-card" href="https://ezcjv.com/" target="_blank" rel="noopener" aria-label="Visit EZ Computing">
           <img src="assets/partners/ez-computing.png" alt="EZ Computing">
+        </a>
+        <a class="partner-card lelantos" href="https://lelantosgroup.org/" target="_blank" rel="noopener" aria-label="Visit Lelantos Group">
+          <img src="assets/partners/lelantos-group.png" alt="Lelantos Group">
         </a>
       </div>
       <div class="capability-cta">
