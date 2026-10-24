@@ -321,15 +321,20 @@
   .partners > .wrap > .note{max-width:980px}
   .partners .note{margin-top:14px}
   .partner-grid{display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:14px; margin-top:34px}
-  .partner-card{min-height:154px; display:flex; align-items:center; justify-content:center; padding:24px;
+  .partner-card{min-height:154px; display:flex; align-items:center; justify-content:center; padding:14px;
                 border:1px solid var(--rule); background:#fff; transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease}
   .partner-card:hover{transform:translateY(-3px); border-color:var(--accent); box-shadow:0 12px 30px rgba(17,34,27,.08)}
-  .partner-card img{display:block; max-width:100%; max-height:96px; width:auto; height:auto; object-fit:contain}
+  .partner-card img{display:block; max-width:100%; max-height:96px; width:var(--logo-width,140px); height:auto; object-fit:contain}
+  .partner-card.vetsez{--logo-width:164px}
+  .partner-card.mind{--logo-width:190px; padding:8px}
+  .partner-card.ezcomputing{--logo-width:116px}
   .partner-card.vetsez{background:#fff}
   .partner-card.ezlabs{background:#fff}
-  .partner-card.ezlabs img{max-height:112px}
+  .partner-card.ezlabs{--logo-width:116px}
+  .partner-card.ezlabs img{max-height:96px}
   .partner-card.lelantos{background:#000}
-  .partner-card.lelantos img{max-height:112px}
+  .partner-card.lelantos{--logo-width:96px}
+  .partner-card.lelantos img{max-height:108px}
   .capability-cta{display:flex; justify-content:center; margin-top:28px}
   .capability-link{display:inline-flex; align-items:center; gap:9px; border:1px solid var(--accent); padding:11px 16px;
                    font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink);
@@ -423,7 +428,7 @@
           <div class="profile-lines">
             <p>Assistant Professor of Anesthesiology</p>
             <p>Fellowship-Trained Liver Transplant Anesthesiologist</p>
-            <p>Computational Biologist &amp; Multi-omics</p>
+            <p>Computational Biology &amp; Multi-omics</p>
             <p>NIA-Funded Principal Investigator</p>
             <p class="profile-specialty"><strong>Medical Specialist</strong></p>
           </div>
@@ -477,10 +482,10 @@
         <a class="partner-card ezlabs" href="https://ezlabs.io/" target="_blank" rel="noopener" aria-label="Visit EZ Labs">
           <img src="assets/partners/ezlabs.png" alt="EZ Labs">
         </a>
-        <a class="partner-card" href="https://mindcomputing.com/" target="_blank" rel="noopener" aria-label="Visit Mind Computing">
+        <a class="partner-card mind" href="https://mindcomputing.com/" target="_blank" rel="noopener" aria-label="Visit Mind Computing">
           <img src="assets/partners/mind-computing.png" alt="Mind Computing">
         </a>
-        <a class="partner-card" href="https://ezcjv.com/" target="_blank" rel="noopener" aria-label="Visit EZ Computing">
+        <a class="partner-card ezcomputing" href="https://ezcjv.com/" target="_blank" rel="noopener" aria-label="Visit EZ Computing">
           <img src="assets/partners/ez-computing.png" alt="EZ Computing">
         </a>
         <a class="partner-card lelantos" href="https://lelantosgroup.org/" target="_blank" rel="noopener" aria-label="Visit Lelantos Group">
